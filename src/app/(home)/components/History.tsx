@@ -1,7 +1,7 @@
 import Theme from "@/components/theme";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function HistoryComponent() {
+export function History() {
 	return (
 		<div className="flex flex-col">
 			<div className="flex justify-between items-baseline">
