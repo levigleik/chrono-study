@@ -1,7 +1,7 @@
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import type { Metadata } from "next";
 import { Libre_Baskerville, Oxanium } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const baskerville = Libre_Baskerville({
 	subsets: ["latin"],
@@ -30,14 +30,7 @@ export default function RootLayout({
 			<body
 				className={`${baskerville.variable} ${oxanium.variable} antialiased`}
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					{children}
-				</ThemeProvider>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);
