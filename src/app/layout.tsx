@@ -1,19 +1,14 @@
-import type { Metadata } from "next";
-import { Libre_Baskerville, Oxanium } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers";
+import type { Metadata } from "next"
+// import { Libre_Baskerville, Oxanium } from "next/font/google"
+import "./globals.css"
+import { Providers } from "./providers"
 
-export const baskerville = Libre_Baskerville({
-	subsets: ["latin"],
-	weight: ["400", "700"],
-	variable: "--font-baskerville",
-});
+// export const baskerville = Libre_Baskerville({
+// 	subsets: ["latin"],
+// 	weight: ["400", "700"],
+// 	variable: "--font-baskerville",
+// });
 
-export const oxanium = Oxanium({
-	subsets: ["latin"],
-	weight: ["400", "700"],
-	variable: "--font-oxanium",
-});
 
 export const metadata: Metadata = {
 	title: "ChronoStudy",
@@ -26,9 +21,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en">
 			<body
-				className={`${baskerville.variable} ${oxanium.variable} antialiased`}
+				className={` antialiased`}
 			>
 				<Providers>{children}</Providers>
 			</body>
