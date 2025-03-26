@@ -6,19 +6,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 import { MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
-export default function Theme() {
+export default function Theme({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme()
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild className="hidden lg:flex">
+        <TooltipTrigger asChild>
           <Button
             variant="outline"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="hidden rounded-full lg:flex"
+            className={cn('hidden rounded-full lg:flex', className)}
             size="icon"
           >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}

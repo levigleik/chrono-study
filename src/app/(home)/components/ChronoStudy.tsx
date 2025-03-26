@@ -27,7 +27,7 @@ export function ChronoStudy() {
         <div className="items mb-4 flex justify-center space-x-2">
           <h1 className="text-2xl font-bold">Chrono Study</h1>
         </div>
-        <Theme />
+        <Theme className="flex lg:hidden" />
       </div>
       <Card className="flex w-full items-center overflow-auto py-4 lg:max-h-[40dvh] lg:py-12">
         <CardContent className="flex w-full flex-col space-y-6 lg:w-2xl">
