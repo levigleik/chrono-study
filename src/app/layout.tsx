@@ -1,32 +1,22 @@
-import type { Metadata } from "next"
-// import { Libre_Baskerville, Oxanium } from "next/font/google"
-import "./globals.css"
-import { Providers } from "./providers"
-
-// export const baskerville = Libre_Baskerville({
-// 	subsets: ["latin"],
-// 	weight: ["400", "700"],
-// 	variable: "--font-baskerville",
-// });
-
+import type { Metadata } from 'next'
+import './globals.css'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
-	title: "ChronoStudy",
-	description: "A study tool for students.",
-};
+  title: 'Chrono Study',
+  description: 'Uma ferramenta para estudantes.',
+}
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-	return (
-		<html lang="en">
-			<body
-				className={` antialiased`}
-			>
-				<Providers>{children}</Providers>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body className="antialiased">
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
 }

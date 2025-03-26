@@ -1,11 +1,20 @@
+import { Libre_Baskerville } from 'next/font/google'
+
+const baskerville = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-baskerville',
+})
 export default function MainLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-	return (
-		<main className="h-screen py-6 px-4 sm:px-8 mx-auto sm:py-12 max-w-[90rem]">
-			{children}
-		</main>
-	);
+  return (
+    <main
+      className={`mx-auto h-screen max-w-[90rem] px-4 py-6 ${baskerville.className} sm:px-8 sm:py-12`}
+    >
+      {children}
+    </main>
+  )
 }
