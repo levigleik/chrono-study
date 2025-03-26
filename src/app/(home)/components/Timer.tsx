@@ -14,6 +14,12 @@ import { useTimerStore } from "@/store/timerStore";
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function Timer() {
 	const [showSaveDialog, setShowSaveDialog] = useState(false);
@@ -62,6 +68,7 @@ export function Timer() {
 						onClick={startTimer}
 						disabled={!selectedSubject || !selectedDiscipline}
 						size="lg"
+						type="button"
 						className="lg:flex-1 w-auto"
 					>
 						<PlayIcon className="mr-2 h-4 w-4" />
@@ -72,6 +79,7 @@ export function Timer() {
 						onClick={pauseTimer}
 						variant="secondary"
 						size="lg"
+						type="button"
 						className="lg:flex-1 w-auto"
 					>
 						<PauseIcon className="mr-2 h-4 w-4" />
@@ -83,6 +91,8 @@ export function Timer() {
 					variant="outline"
 					size="lg"
 					className="lg:flex-1 w-auto"
+					type="button"
+					disabled={seconds === 0 && !selectedSubject && !selectedDiscipline}
 				>
 					<RotateCcwIcon className="mr-2 h-4 w-4" />
 					Resetar
@@ -102,7 +112,7 @@ export function Timer() {
 			<Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Save Study Session</DialogTitle>
+						<DialogTitle>Salvar tempo</DialogTitle>
 						<DialogDescription>
 							Are you sure you want to save this study session? This will reset
 							the timer.

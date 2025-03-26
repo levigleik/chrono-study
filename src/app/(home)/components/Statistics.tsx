@@ -23,26 +23,26 @@ const chartData = [
 
 const chartConfig = {
 	visitors: {
-		label: "Visitors",
+		label: "Estudos",
 	},
 	chrome: {
-		label: "Chrome",
+		label: "Álgebra Linear",
 		color: "var(--chart-1)",
 	},
 	safari: {
-		label: "Safari",
+		label: "Mecânica Clássica",
 		color: "var(--chart-2)",
 	},
 	firefox: {
-		label: "Firefox",
+		label: "Revolução Francesa",
 		color: "var(--chart-3)",
 	},
 	edge: {
-		label: "Edge",
+		label: "Cálculo Diferencial",
 		color: "var(--chart-4)",
 	},
 	other: {
-		label: "Other",
+		label: "Eletromagnetismo",
 		color: "var(--chart-5)",
 	},
 } satisfies ChartConfig;
@@ -64,7 +64,7 @@ export function Statistics() {
 				<CardContent className="px-4 lg:w-2xl w-full">
 					<ChartContainer
 						config={chartConfig}
-						className="mx-auto aspect-square max-h-[250px]"
+						className="mx-auto aspect-square max-h-[280px]"
 					>
 						<PieChart>
 							<ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -76,7 +76,7 @@ export function Statistics() {
 							/>
 							<ChartLegend
 								content={<ChartLegendContent nameKey="browser" />}
-								className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+								className="-translate-y-2 flex-wrap gap-2"
 							/>
 						</PieChart>
 					</ChartContainer>
