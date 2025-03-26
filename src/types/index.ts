@@ -1,18 +1,16 @@
-export interface Subject {
-	id: string;
+export interface Discipline {
 	name: string;
-	disciplines: Discipline[];
+	subjects: Subjects[];
 }
 
-export interface Discipline {
-	id: string;
+export interface Subjects {
 	name: string;
 }
 
 export interface StudySession {
 	id: string;
-	subjectId: string;
-	disciplineId: string;
+	subject: string;
+	discipline: string;
 	duration: number;
 	timestamp: number;
 }

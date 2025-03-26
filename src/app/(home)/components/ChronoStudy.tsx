@@ -1,15 +1,12 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -22,8 +19,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { disciplinesData } from "@/lib/mock";
-import { useEffect } from "react";
+import { disciplinesData } from "@/lib/discipline-data";
+import { useTimerStore } from "@/store/timerStore";
 import { Timer } from "./Timer";
 
 const FormSchema = z.object({
@@ -36,11 +33,12 @@ export function ChronoStudy() {
 		resolver: zodResolver(FormSchema),
 	});
 
-	const disciplineWatch = form.watch("discipline");
+	const { selectedSubject, setDiscipline, selectedDiscipline, setSubject } =
+		useTimerStore();
 
-	const temas = disciplinesData.find(
-		(discipline) => discipline.nome === disciplineWatch,
-	)?.temas;
+	const subjects = disciplinesData.find(
+		(discipline) => discipline.discipline === selectedDiscipline,
+	)?.subjects;
 
 	const onSubmit = (data: z.infer<typeof FormSchema>) => {
 		console.log(data);
@@ -49,7 +47,7 @@ export function ChronoStudy() {
 	return (
 		<div className="flex flex-col">
 			<h1 className="text-2xl font-bold mb-4">ChronoStudy</h1>
-			<Card className="flex w-full h-[85dvh] py-4 items-center justify-center">
+			<Card className="flex w-full lg:py-12 py-4 items-center lg:max-h-[40dvh] overflow-auto">
 				<CardContent className="px-4 lg:w-2xl w-full">
 					<Form {...form}>
 						<form
@@ -60,12 +58,15 @@ export function ChronoStudy() {
 								<FormField
 									control={form.control}
 									name="discipline"
-									render={({ field }) => (
+									render={() => (
 										<FormItem className="flex-1">
 											<FormLabel>Disiplina</FormLabel>
 											<Select
-												onValueChange={field.onChange}
-												value={field.value}
+												onValueChange={(e) => {
+													setDiscipline(e);
+													setSubject("");
+												}}
+												value={selectedDiscipline || ""}
 											>
 												<FormControl>
 													<SelectTrigger className="w-full">
@@ -73,12 +74,9 @@ export function ChronoStudy() {
 													</SelectTrigger>
 												</FormControl>
 												<SelectContent>
-													{disciplinesData.map((discipline) => (
-														<SelectItem
-															key={discipline.nome}
-															value={discipline.nome}
-														>
-															{discipline.nome}
+													{disciplinesData.map(({ discipline }) => (
+														<SelectItem key={discipline} value={discipline}>
+															{discipline}
 														</SelectItem>
 													))}
 												</SelectContent>
@@ -90,12 +88,12 @@ export function ChronoStudy() {
 								<FormField
 									control={form.control}
 									name="subject"
-									render={({ field }) => (
+									render={() => (
 										<FormItem className="flex-1">
 											<FormLabel>Tema</FormLabel>
 											<Select
-												onValueChange={field.onChange}
-												value={field.value}
+												onValueChange={setSubject}
+												value={selectedSubject || ""}
 											>
 												<FormControl>
 													<SelectTrigger className="w-full">
@@ -103,9 +101,9 @@ export function ChronoStudy() {
 													</SelectTrigger>
 												</FormControl>
 												<SelectContent>
-													{temas?.map((tema) => (
-														<SelectItem key={tema} value={tema}>
-															{tema}
+													{subjects?.map((subject) => (
+														<SelectItem key={subject} value={subject}>
+															{subject}
 														</SelectItem>
 													))}
 												</SelectContent>

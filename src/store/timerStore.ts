@@ -6,8 +6,8 @@ import type { StudySession, TimerState } from "../types";
 
 interface TimerStore extends TimerState {
 	sessions: StudySession[];
-	setSubject: (subjectId: string) => void;
-	setDiscipline: (disciplineId: string) => void;
+	setSubject: (subject: string) => void;
+	setDiscipline: (discipline: string) => void;
 	startTimer: () => void;
 	pauseTimer: () => void;
 	resetTimer: () => void;
@@ -24,9 +24,8 @@ export const useTimerStore = create<TimerStore>()(
 			selectedDiscipline: null,
 			sessions: [],
 
-			setSubject: (subjectId) => set({ selectedSubject: subjectId }),
-			setDiscipline: (disciplineId) =>
-				set({ selectedDiscipline: disciplineId }),
+			setSubject: (subject) => set({ selectedSubject: subject }),
+			setDiscipline: (discipline) => set({ selectedDiscipline: discipline }),
 
 			startTimer: () => set({ isRunning: true }),
 			pauseTimer: () => set({ isRunning: false }),
@@ -52,8 +51,8 @@ export const useTimerStore = create<TimerStore>()(
 
 				const newSession: StudySession = {
 					id: Date.now().toString(),
-					subjectId: state.selectedSubject,
-					disciplineId: state.selectedDiscipline,
+					subject: state.selectedSubject,
+					discipline: state.selectedDiscipline,
 					duration: state.seconds,
 					timestamp: Date.now(),
 				};
