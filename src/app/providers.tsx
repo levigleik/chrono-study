@@ -1,13 +1,13 @@
 "use client";
 
-import { ErrorBoundary } from "react-error-boundary";
-import { ToastContainer, Zoom } from "react-toastify";
+import { ErrorBoundary } from "react-error-boundary"
+import { ToastContainer, Zoom } from "react-toastify"
 
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Button } from "@/components/ui/button";
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import { Button } from "@/components/ui/button"
 
 export function Providers({ children }: { children: React.ReactNode }) {
 	const [isClient, setIsClient] = useState(false);
@@ -22,7 +22,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 	return (
 		<ErrorBoundary
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			fallbackRender={({ resetErrorBoundary }: any) => (
 				<div className="flex h-screen flex-col items-center justify-center">
 					<h1 className="text-2xl font-bold">Ocorreu um erro</h1>

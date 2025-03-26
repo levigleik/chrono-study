@@ -14,12 +14,6 @@ import { useTimerStore } from "@/store/timerStore";
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 export function Timer() {
 	const [showSaveDialog, setShowSaveDialog] = useState(false);

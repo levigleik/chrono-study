@@ -1,6 +1,5 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { z } from "zod";
 
 import {
 	type ChartConfig,
@@ -10,8 +9,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useMemo } from "react";
-import { LabelList, Pie, PieChart } from "recharts";
+import { Pie, PieChart } from "recharts";
 
 const chartData = [
 	{ browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -47,16 +45,7 @@ const chartConfig = {
 	},
 } satisfies ChartConfig;
 
-const FormSchema = z.object({
-	discipline: z.string().nonempty(),
-	subject: z.string().nonempty(),
-});
-
 export function Statistics() {
-	const totalVisitors = useMemo(() => {
-		return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-	}, []);
-
 	return (
 		<div className="flex flex-col ">
 			<h1 className="text-2xl font-bold my-2">Statistics</h1>

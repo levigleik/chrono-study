@@ -1,17 +1,6 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
 import {
 	Select,
 	SelectContent,
@@ -30,10 +19,6 @@ export function ChronoStudy() {
 	const subjects = disciplinesData.find(
 		(discipline) => discipline.discipline === selectedDiscipline,
 	)?.subjects;
-
-	const onSubmit = (data: any) => {
-		console.log(data);
-	};
 
 	return (
 		<div className="flex flex-col">
