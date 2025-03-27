@@ -46,11 +46,141 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { ArrowUpDown } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { disciplinesData } from '@/lib/discipline-data'
+import { useState } from 'react'
+
+const data: Payment[] = [
+  {
+    id: 'm5gr84i9',
+    time: 316,
+    discipline: 'Matemática',
+    subject: 'Cálculo Diferencial',
+  },
+  {
+    id: '3u1reuv4',
+    time: 242,
+    discipline: 'Matemática',
+    subject: 'Eletromagnetismo',
+  },
+  {
+    id: 'derv1ws0',
+    time: 837,
+    discipline: 'História',
+    subject: 'Álgebra Linear',
+  },
+  {
+    id: '5kma53ae',
+    time: 874,
+    discipline: 'Matemática',
+    subject: 'Idade Média',
+  },
+  {
+    id: 'bhqecj4p',
+    time: 721,
+    discipline: 'Física',
+    subject: 'Mecânica Clássica',
+  },
+]
+
+export type Payment = {
+  id: string
+  time: number
+  discipline: (typeof disciplinesData)[number]['discipline']
+  subject: (typeof disciplinesData)[number]['subjects'][number]
+}
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: 'discipline',
+    header: () => <span className="font-bold">Disciplina</span>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue('discipline')}</div>
+    ),
+  },
+  {
+    accessorKey: 'subject',
+    header: () => <span className="font-bold">Tema</span>,
+    cell: ({ row }) => <div>{row.getValue('subject')}</div>,
+  },
+  {
+    accessorKey: 'time',
+    header: ({ column }) => {
+      return (
+        <div className="text-right">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="font-bold"
+          >
+            Tempo
+            <ArrowUpDown />
+          </Button>
+        </div>
+      )
+    },
+    cell: ({ row }) => {
+      const time = parseFloat(row.getValue('time'))
+
+      // Format the time as hours and minutes
+      const formatted = `${Math.floor(time / 60)}h ${time % 60}m`
+
+      return <div className="text-right font-bold">{formatted}</div>
+    },
+  },
+]
+
 export function Statistics() {
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState({})
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  })
+
   return (
     <div className="flex flex-col">
       <h1 className="mb-4 text-2xl font-bold">Estatísticas</h1>
-      <Card className="flex w-full items-center py-6 lg:h-[89dvh]">
+      <Card className="flex h-[90dvh] w-full items-center py-6">
         <CardContent className="w-full overflow-auto px-4 lg:w-2xl">
           <ChartContainer
             config={chartConfig}
@@ -71,188 +201,57 @@ export function Statistics() {
             </PieChart>
           </ChartContainer>
           <div className="my-8 h-px w-full bg-gray-200" />
-          <div className="flex flex-col">
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-            <div className="mb-4 flex justify-between">
-              <div className="flex justify-between gap-2 xl:gap-4">
-                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
-                  123m
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">Matemática</p>
-                  <p className="text-sm text-gray-500">Álgebra Linear</p>
-                </div>
-              </div>
-              <div className="flex flex-col justify-between">
-                <p className="">04/10/2023</p>
-                <p className="text-sm text-gray-500">08:00</p>
-              </div>
-            </div>
-          </div>
+          <h3 className="mb-8 text-2xl font-bold">
+            Disciplinas mais estudadas
+          </h3>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>

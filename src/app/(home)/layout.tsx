@@ -12,7 +12,7 @@ export default function MainLayout({
 }>) {
   return (
     <main
-      className={`mx-auto h-screen max-w-[90rem] px-4 py-6 ${baskerville.className} sm:px-8 sm:py-12`}
+      className={`mx-auto h-screen max-w-[90rem] px-4 py-6 ${baskerville.className} sm:px-8`}
     >
       {children}
     </main>
