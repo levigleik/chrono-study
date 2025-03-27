@@ -118,16 +118,6 @@ export function StatisticsCard() {
         <h1 className="text-2xl font-bold">Estatísticas</h1>
         <Theme className="hidden lg:flex" />
       </div>
-      <Button
-        type="button"
-        className="mb-4 hidden lg:flex"
-        onClick={() => {
-          useTimerStore.setState({ sessions: [] })
-          useTimerStore.persist.clearStorage()
-        }}
-      >
-        <span className="text-sm font-bold">Limpar histórico</span>
-      </Button>
       <Card className="items-centerpy-6 flex h-full">
         <CardContent className="overflow-auto px-4">
           <h3 className="mb-8 text-lg font-bold">Disciplinas mais estudadas</h3>
