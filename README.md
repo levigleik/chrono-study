@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chrono Study
 
-## Getting Started
+Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerenciamento de tempo e estudos. Ele utiliza uma estrutura modular e moderna, com suporte a temas (claro e escuro) e componentes reutilizáveis.
 
-First, run the development server:
+## 🚀 Tecnologias e Bibliotecas Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **Next.js**: Framework para renderização do lado do servidor (SSR) e geração de sites estáticos.
+- **Tailwind CSS**: Framework de utilitários CSS para estilização rápida e responsiva.
+- **next-themes**: Gerenciamento de temas (claro e escuro).
+- **lucide-react**: Ícones modernos e leves.
+- **TypeScript**: Superset do JavaScript para tipagem estática.
+- **ESLint e Prettier**: Ferramentas para linting e formatação de código.
+
+## 📂 Estrutura do Projeto
+
+O projeto segue uma estrutura modular, com componentes organizados por página e reutilizáveis:
+
+```plaintext
+src/
+├── app/
+│   ├── (home)/
+│   │   ├── components/
+│   │   │   ├── ChronoStudyCard.tsx
+│   │   │   ├── HistoryItem.tsx
+│   │   │   ├── HistoryCard.tsx
+│   │   │   ├── StatisticsCard.tsx
+│   │   │   ├── Timer.tsx
+│   │   ├── types/
+│   │   │   ├── index.ts
+│   │   ├── utils/
+│   │   │   ├── index.ts
+│   │   ├── page.tsx
+│   │   ├── layout.tsx
+├── components/
+│   ├── ui/
+│   │   ├── Button.tsx
+│   │   ├── Card.tsx
+│   │   ├── Tooltip.tsx
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Principais Componentes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **ChronoStudy**: Componente principal para gerenciamento de tempo.
+- **Timer**: Subcomponente para controle de contagem regressiva.
+- **History**: Exibe o histórico de atividades.
+- **Theme**: Alterna entre os temas claro e escuro.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Como Rodar o Projeto
 
-## Learn More
+### Pré-requisitos
 
-To learn more about Next.js, take a look at the following resources:
+Certifique-se de ter instalado:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Node.js** (versão 16 ou superior)
+- **npm** ou **yarn**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Passos para rodar
 
-## Deploy on Vercel
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/chrono-study.git
+   cd chrono-study
+   ```
+2. Instale as dependências:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
+   npm install
+   # ou
+   yarn install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Inicie o servidor de desenvolvimento:
+
+   ```
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+4. Abra o navegador e acesse:
+   ```
+   http://localhost:3000
+   ```
+
+## 📦 Scripts Disponíveis
+
+- dev: Inicia o servidor de desenvolvimento.
+- build: Gera a build de produção.
+- start: Inicia o servidor em modo de produção.
+- lint: Verifica o código com ESLint.
+
+## 🌟 Funcionalidades
+
+- Gerenciamento de tempo: Controle de atividades com um timer.
+- Histórico: Visualização de atividades anteriores.
+- Tema claro/escuro: Alternância entre temas com suporte a persistência.
