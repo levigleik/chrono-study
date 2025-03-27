@@ -1,3 +1,4 @@
+// Original path: src/app/home/components/ChronoStudyCard.tsx
 'use client'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -13,7 +14,7 @@ import { disciplinesData } from '@/lib/discipline-data'
 import { useTimerStore } from '@/store/timerStore'
 import { Timer } from './Timer'
 
-export function ChronoStudy() {
+export function ChronoStudyCard() {
   const { selectedSubject, setDiscipline, selectedDiscipline, setSubject } =
     useTimerStore()
 
@@ -22,16 +23,16 @@ export function ChronoStudy() {
   )?.subjects
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <div className="mb-4 flex items-baseline justify-between">
         <div className="items flex justify-center space-x-2">
           <h1 className="text-2xl font-bold">Chrono Study</h1>
         </div>
         <Theme className="flex lg:hidden" />
       </div>
-      <Card className="flex w-full items-center overflow-auto py-4 lg:max-h-[40dvh] lg:py-12">
-        <CardContent className="flex w-full flex-col py-6 lg:w-2xl">
-          <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
+      <Card className="flex justify-center">
+        <CardContent className="flex min-h-[300px] flex-col justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex-1">
               <span className="mb-2">Disiplina</span>
               <Select
@@ -55,7 +56,11 @@ export function ChronoStudy() {
             </div>
             <div className="flex-1">
               <span className="mb-2">Tema</span>
-              <Select onValueChange={setSubject} value={selectedSubject || ''}>
+              <Select
+                onValueChange={setSubject}
+                value={selectedSubject || ''}
+                disabled={!selectedDiscipline}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecione um tema" />
                 </SelectTrigger>

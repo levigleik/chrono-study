@@ -19,7 +19,7 @@ export default function Theme({ className }: { className?: string }) {
           <Button
             variant="outline"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={cn('hidden rounded-full lg:flex', className)}
+            className={cn('h-8 rounded-full', className)}
             size="icon"
           >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}

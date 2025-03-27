@@ -15,7 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useInterval } from '@/lib/use-interval'
 import { useTimerStore } from '@/store/timerStore'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
@@ -26,30 +25,26 @@ export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
   const {
     isRunning,
-    seconds,
+    elapsedTime,
+    timestampStart,
     selectedSubject,
     selectedDiscipline,
     startTimer,
     pauseTimer,
     resetTimer,
-    tick,
     saveSession,
   } = useTimerStore()
+
+  const [seconds, setSeconds] = useState(0)
 
   const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600)
     const minutes = Math.floor((totalSeconds % 3600) / 60)
-    const seconds = totalSeconds % 60
+    const sec = totalSeconds % 60
     return `${hours.toString().padStart(2, '0')}:${minutes
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+      .padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
   }
-
-  useInterval(() => {
-    if (isRunning) {
-      tick()
-    }
-  }, 1000)
 
   const handleSave = useCallback(() => {
     saveSession()
@@ -79,11 +74,28 @@ export function Timer() {
     return () => document.removeEventListener('keydown', rBtn)
   }, [resetTimer, handleSave, seconds, isRunning, pauseTimer, startTimer])
 
+  useEffect(() => {
+    const updateTimer = () => {
+      setSeconds(
+        Math.floor(
+          elapsedTime + (isRunning ? (Date.now() - timestampStart) / 1000 : 0),
+        ),
+      )
+    }
+
+    updateTimer()
+
+    const interval = setInterval(updateTimer, 1000)
+    return () => clearInterval(interval)
+  }, [isRunning, timestampStart, elapsedTime])
+
   return (
-    <div className="flex flex-col text-center">
-      <span className="font-clockicons my-2 text-5xl md:text-6xl lg:text-8xl">
-        {formatTime(seconds)}
-      </span>
+    <>
+      <div className="flex flex-col text-center">
+        <span className="font-clockicons my-2 text-5xl md:text-6xl lg:text-8xl">
+          {formatTime(seconds)}
+        </span>
+      </div>
       <TooltipProvider>
         <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
           <Tooltip>
@@ -147,7 +159,10 @@ export function Timer() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                onClick={() => setShowSaveDialog(true)}
+                onClick={() => {
+                  // setIsRunning(false)
+                  setShowSaveDialog(true)
+                }}
                 variant="default"
                 size="lg"
                 className="w-auto lg:flex-1"
@@ -185,6 +200,6 @@ export function Timer() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   )
 }
