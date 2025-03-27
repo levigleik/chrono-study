@@ -1,6 +1,6 @@
 'use client'
-import { Card, CardContent } from '@/components/ui/card'
 
+import { Card, CardContent } from '@/components/ui/card'
 import {
   type ChartConfig,
   ChartContainer,
@@ -9,6 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+
 import { Pie, PieChart } from 'recharts'
 
 const chartData = [
@@ -48,12 +49,12 @@ const chartConfig = {
 export function Statistics() {
   return (
     <div className="flex flex-col">
-      <h1 className="my-2 text-2xl font-bold">Estatísticas</h1>
-      <Card className="flex w-full items-center justify-center overflow-auto py-0 lg:max-h-[40dvh]">
-        <CardContent className="w-full px-4 lg:w-2xl">
+      <h1 className="mb-4 text-2xl font-bold">Estatísticas</h1>
+      <Card className="flex w-full items-center py-6 lg:h-[89dvh]">
+        <CardContent className="w-full overflow-auto px-4 lg:w-2xl">
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[280px]"
+            className="mx-auto mb-8 aspect-square max-h-[280px]"
           >
             <PieChart>
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -69,6 +70,189 @@ export function Statistics() {
               />
             </PieChart>
           </ChartContainer>
+          <div className="my-8 h-px w-full bg-gray-200" />
+          <div className="flex flex-col">
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+            <div className="mb-4 flex justify-between">
+              <div className="flex justify-between gap-2 xl:gap-4">
+                <div className="flex h-12 w-12 items-center justify-center place-self-center rounded-full bg-blue-500 text-white">
+                  123m
+                </div>
+                <div>
+                  <p className="text-lg font-semibold">Matemática</p>
+                  <p className="text-sm text-gray-500">Álgebra Linear</p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between">
+                <p className="">04/10/2023</p>
+                <p className="text-sm text-gray-500">08:00</p>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

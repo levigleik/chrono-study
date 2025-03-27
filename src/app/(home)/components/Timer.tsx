@@ -57,22 +57,6 @@ export function Timer() {
     toast.success('Tempo salvo com sucesso!')
   }, [saveSession])
 
-  // useEffect(() => {
-  //   const spaceBtn = (e: KeyboardEvent) => {
-  //     if (e.key === 's') {
-  //       e.preventDefault()
-  //       if (isRunning) {
-  //         pauseTimer()
-  //       } else {
-  //         startTimer()
-  //       }
-  //     }
-  //   }
-
-  //   document.addEventListener('keydown', spaceBtn)
-  //   return () => document.removeEventListener('keydown', spaceBtn)
-  // }, [isRunning, pauseTimer, startTimer])
-
   useEffect(() => {
     const rBtn = (e: KeyboardEvent) => {
       if (e.key === 'r') {
@@ -95,21 +79,9 @@ export function Timer() {
     return () => document.removeEventListener('keydown', rBtn)
   }, [resetTimer, handleSave, seconds, isRunning, pauseTimer, startTimer])
 
-  // useEffect(() => {
-  //   const sBtn = (e: KeyboardEvent) => {
-  //     if (e.key === 's') {
-  //       e.preventDefault()
-  //       handleSave()
-  //     }
-  //   }
-
-  //   document.addEventListener('keydown', sBtn)
-  //   return () => document.removeEventListener('keydown', sBtn)
-  // }, [handleSave])
-
   return (
     <div className="flex flex-col text-center">
-      <span className="font-clockicons text-5xl md:text-6xl lg:text-8xl">
+      <span className="font-clockicons my-2 text-5xl md:text-6xl lg:text-8xl">
         {formatTime(seconds)}
       </span>
       <TooltipProvider>
