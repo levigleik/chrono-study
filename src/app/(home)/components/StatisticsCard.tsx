@@ -124,7 +124,7 @@ export function StatisticsCard() {
           {chartData.length > 0 && (
             <ChartContainer
               config={chartConfig}
-              className="[&_.recharts-text]:fill-background mx-auto mb-8 aspect-square max-h-[300px] w-full"
+              className="[&_.recharts-text]:fill-background mx-auto mb-8 aspect-square max-h-[240px] w-full"
             >
               <PieChart>
                 <ChartTooltip

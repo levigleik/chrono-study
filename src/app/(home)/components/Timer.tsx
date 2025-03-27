@@ -23,6 +23,7 @@ import { toast } from 'react-toastify'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
+  const [showResetDialog, setShowResetDialog] = useState(false)
   const {
     isRunning,
     elapsedTime,
@@ -125,7 +126,7 @@ export function Timer() {
               )}
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              Pressione a tecla{' '}
+              Clique ou pressione a tecla{' '}
               <span className="font-bold italic">
                 <kbd>espaço</kbd>
               </span>{' '}
@@ -135,7 +136,15 @@ export function Timer() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                onClick={resetTimer}
+                onClick={
+                  seconds === 0
+                    ? () => {
+                        resetTimer()
+                      }
+                    : () => {
+                        setShowResetDialog(true)
+                      }
+                }
                 variant="outline"
                 size="lg"
                 className="w-auto lg:flex-1"
@@ -149,7 +158,7 @@ export function Timer() {
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              Pressione a tecla{' '}
+              Clique ou pressione a tecla{' '}
               <span className="font-bold italic">
                 <kbd>r</kbd>
               </span>{' '}
@@ -173,7 +182,7 @@ export function Timer() {
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              Pressione a tecla{' '}
+              Clique ou pressione a tecla{' '}
               <span className="font-bold italic">
                 <kbd>s</kbd>
               </span>{' '}
@@ -188,8 +197,7 @@ export function Timer() {
           <DialogHeader>
             <DialogTitle>Salvar tempo</DialogTitle>
             <DialogDescription>
-              Tem certeza de que deseja salvar esta sessão de estudo? Isso irá
-              reiniciar o cronômetro.
+              Tem certeza de que deseja salvar esta sessão de estudo?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -197,6 +205,30 @@ export function Timer() {
               Cancelar
             </Button>
             <Button onClick={handleSave}>Salvar tempo</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Resetar cronômetro</DialogTitle>
+            <DialogDescription>
+              Tem certeza de que deseja resetar o cronômetro?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                resetTimer()
+                setShowResetDialog(false)
+              }}
+            >
+              Resetar cronômetro
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
