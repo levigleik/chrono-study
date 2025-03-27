@@ -33,8 +33,8 @@ export function ChronoStudyCard() {
       <Card className="flex justify-center">
         <CardContent className="flex min-h-[300px] flex-col justify-between">
           <div className="flex flex-col gap-4 lg:flex-row">
-            <div className="flex-1">
-              <span className="mb-2">Disiplina</span>
+            <div className="flex flex-1 flex-col gap-4">
+              <span>Disciplina</span>
               <Select
                 onValueChange={(e) => {
                   setDiscipline(e)
@@ -54,8 +54,8 @@ export function ChronoStudyCard() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex-1">
-              <span className="mb-2">Tema</span>
+            <div className="flex flex-1 flex-col gap-4">
+              <span>Tema</span>
               <Select
                 onValueChange={setSubject}
                 value={selectedSubject || ''}
