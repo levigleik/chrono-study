@@ -17,28 +17,49 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 O projeto segue uma estrutura modular, com componentes organizados por página e reutilizáveis:
 
 ```plaintext
-src/
-├── app/
-│   ├── (home)/
-│   │   ├── components/
+src
+├── app
+│   ├── (home)
+│   │   ├── components
 │   │   │   ├── ChronoStudyCard.tsx
-│   │   │   ├── HistoryItem.tsx
 │   │   │   ├── HistoryCard.tsx
+│   │   │   ├── HistoryItem.tsx
 │   │   │   ├── StatisticsCard.tsx
-│   │   │   ├── Timer.tsx
-│   │   ├── types/
-│   │   │   ├── index.ts
-│   │   ├── utils/
-│   │   │   ├── index.ts
-│   │   ├── page.tsx
+│   │   │   └── Timer.tsx
+│   │   ├── types
+│   │   │   └── index.ts
+│   │   ├── utils
+│   │   │   └── index.ts
 │   │   ├── layout.tsx
-├── components/
-│   ├── ui/
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Tooltip.tsx
-│   ├── Navbar.tsx
-│   ├── Footer.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── providers.tsx
+├── components
+│   ├── providers
+│   │   └── theme-provider.tsx
+│   ├── ui
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── chart.tsx
+│   │   ├── dialog.tsx
+│   │   ├── dropdown-menu.tsx
+│   │   ├── form.tsx
+│   │   ├── label.tsx
+│   │   ├── resizable.tsx
+│   │   ├── select.tsx
+│   │   ├── table.tsx
+│   │   └── tooltip.tsx
+│   └── theme.tsx
+├── lib
+│   ├── discipline-data.ts
+│   ├── use-interval.tsx
+│   └── utils.ts
+├── store
+│   └── timerStore.ts
+└── types
+│   └── index.ts
+└── next.config.ts
 ```
 
 ### Principais Componentes
@@ -46,7 +67,7 @@ src/
 - **ChronoStudy**: Componente principal para gerenciamento de tempo.
 - **Timer**: Subcomponente para controle de contagem regressiva.
 - **History**: Exibe o histórico de atividades.
-- **Theme**: Alterna entre os temas claro e escuro.
+- **Statistics**: Exibe um resumo das disciplinas e temas mais estudados.
 
 ## 🛠️ Como Rodar o Projeto
 
