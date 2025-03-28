@@ -169,7 +169,7 @@ export function Timer() {
             <TooltipTrigger asChild>
               <Button
                 onClick={() => {
-                  // setIsRunning(false)
+                  pauseTimer()
                   setShowSaveDialog(true)
                 }}
                 variant="default"

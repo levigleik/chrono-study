@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary } from 'react-error-boundary'
-import { ToastContainer, Zoom } from 'react-toastify'
+import { Bounce, ToastContainer } from 'react-toastify'
 
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
@@ -38,21 +38,20 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
       <ThemeProvider attribute="class" defaultTheme="dark">
         <ToastContainer
-          pauseOnHover={false}
-          pauseOnFocusLoss={false}
-          position="top-center"
-          autoClose={4000}
+          position="top-right"
+          autoClose={5000}
           hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          transition={Zoom}
+          newestOnTop={false}
+          closeOnClick={false}
           rtl={false}
+          pauseOnFocusLoss
           draggable
+          pauseOnHover
           theme="dark"
+          transition={Bounce}
           toastClassName={cn(
-            'min-h-10 cursor-pointer justify-between',
+            'min-h-10 cursor-pointer',
             'overflow-hidden rounded-[25px] bg-gray-900 p-3 text-white',
-            'md:mb-2 mb-8 md:m-0 m-4',
           )}
         />
         {children}

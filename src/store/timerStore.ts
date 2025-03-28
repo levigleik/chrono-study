@@ -65,7 +65,8 @@ export const useTimerStore = create<TimerStore>()(
       saveSession: () => {
         const state = get()
         const newElapsedTime =
-          state.elapsedTime + (Date.now() - state.timestampStart) / 1000
+          state.elapsedTime +
+          (state.isRunning ? (Date.now() - state.timestampStart) / 1000 : 0)
         const totalTime = Math.floor(newElapsedTime)
 
         if (

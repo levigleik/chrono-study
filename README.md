@@ -9,8 +9,14 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 - **Tailwind CSS**: Framework de utilitários CSS para estilização rápida e responsiva.
 - **next-themes**: Gerenciamento de temas (claro e escuro).
 - **lucide-react**: Ícones modernos e leves.
-- **TypeScript**: Superset do JavaScript para tipagem estática.
-- **ESLint e Prettier**: Ferramentas para linting e formatação de código.
+- **shadcn/ui**: Biblioteca de componentes reutilizáveis e estilizáveis.
+- **react-toastify**: Utilizado para exibir o alerta de sucesso ao salvar o tempo.
+
+## 🌟 Funcionalidades
+
+- **Gerenciamento de tempo**: Controle de atividades com um timer.
+- **Histórico**: Visualização de atividades anteriores.
+- **Tema claro/escuro**: Alternância entre temas com suporte a persistência.
 
 ## 📂 Estrutura do Projeto
 
@@ -69,7 +75,7 @@ src
 - **History**: Exibe o histórico de atividades.
 - **Statistics**: Exibe um resumo das disciplinas e temas mais estudados.
 
-## 🛠️ Como Rodar o Projeto
+## 🛠️ Como executar o projeto
 
 ### Pré-requisitos
 
@@ -78,7 +84,7 @@ Certifique-se de ter instalado:
 - **Node.js** (versão 16 ou superior)
 - **npm** ou **yarn**
 
-### Passos para rodar
+### Passos para executar
 
 1. Clone o repositório:
    ```bash
@@ -112,9 +118,3 @@ Certifique-se de ter instalado:
 - build: Gera a build de produção.
 - start: Inicia o servidor em modo de produção.
 - lint: Verifica o código com ESLint.
-
-## 🌟 Funcionalidades
-
-- Gerenciamento de tempo: Controle de atividades com um timer.
-- Histórico: Visualização de atividades anteriores.
-- Tema claro/escuro: Alternância entre temas com suporte a persistência.
