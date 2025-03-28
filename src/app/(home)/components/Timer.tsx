@@ -47,28 +47,6 @@ export function Timer() {
     toast.success('Tempo salvo com sucesso!')
   }, [saveSession])
 
-  // useEffect(() => {
-  //   const rBtn = (e: KeyboardEvent) => {
-  //     if (e.key === 'r') {
-  //       e.preventDefault()
-  //       resetTimer()
-  //     } else if (e.key === 's' && seconds !== 0) {
-  //       e.preventDefault()
-  //       setShowSaveDialog(true)
-  //     } else if (e.key === ' ' || e.code === 'Space') {
-  //       e.preventDefault()
-  //       if (isRunning) {
-  //         pauseTimer()
-  //       } else {
-  //         startTimer()
-  //       }
-  //     }
-  //   }
-
-  //   document.addEventListener('keydown', rBtn)
-  //   return () => document.removeEventListener('keydown', rBtn)
-  // }, [resetTimer, handleSave, seconds, isRunning, pauseTimer, startTimer])
-
   useEffect(() => {
     const updateTimer = () => {
       setSeconds(
@@ -161,7 +139,7 @@ export function Timer() {
             <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
               Cancelar
             </Button>
-            <Button onClick={handleSave}>Salvar tempo</Button>
+            <Button onClick={handleSave}>Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -184,7 +162,7 @@ export function Timer() {
                 setShowResetDialog(false)
               }}
             >
-              Resetar cronômetro
+              Confirmar
             </Button>
           </DialogFooter>
         </DialogContent>

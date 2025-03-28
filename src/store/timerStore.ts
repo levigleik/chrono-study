@@ -12,6 +12,7 @@ interface TimerStore extends TimerState {
   pauseTimer: () => void
   resetTimer: () => void
   saveSession: () => void
+  clearSessions: () => void
 }
 
 export const useTimerStore = create<TimerStore>()(
@@ -94,6 +95,7 @@ export const useTimerStore = create<TimerStore>()(
           selectedDiscipline: null,
         }))
       },
+      clearSessions: () => set({ sessions: [] }),
     }),
     {
       name: 'study-timer-storage',

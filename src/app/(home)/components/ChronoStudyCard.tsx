@@ -34,7 +34,7 @@ export function ChronoStudyCard() {
     disciplines: disciplinesData,
     addDiscipline,
     addSubject,
-  } = useDisciplineStore((state) => state)
+  } = useDisciplineStore()
 
   const subjects = disciplinesData.find(
     (discipline) => discipline.name === selectedDiscipline,
@@ -45,6 +45,28 @@ export function ChronoStudyCard() {
 
   const [disciplineInput, setDisciplineInput] = useState('')
   const [subjectInput, setSubjectInput] = useState('')
+
+  const handleDisciplineChange = (value: string) => {
+    setDiscipline(value)
+    setSubject('')
+  }
+  const handlAddDiscipline = () => {
+    if (!disciplineInput) return
+    addDiscipline(disciplineInput)
+    setDisciplineInput('')
+    setDiscipline(disciplineInput)
+    setSubject('')
+    setShowDisciplines(false)
+  }
+
+  const handleAddSubject = () => {
+    if (!selectedDiscipline) return
+    if (!subjectInput) return
+    addSubject(selectedDiscipline, subjectInput)
+    setSubjectInput('')
+    setSubject(subjectInput)
+    setShowSubjects(false)
+  }
 
   return (
     <div className="flex w-full flex-col">
@@ -61,10 +83,7 @@ export function ChronoStudyCard() {
               <span>Disciplina</span>
               <div className="flex gap-2">
                 <Select
-                  onValueChange={(e) => {
-                    setDiscipline(e)
-                    setSubject('')
-                  }}
+                  onValueChange={handleDisciplineChange}
                   value={selectedDiscipline || ''}
                 >
                   <SelectTrigger className="w-full">
@@ -116,14 +135,7 @@ export function ChronoStudyCard() {
                       <Button
                         type="button"
                         className="w-auto lg:flex-1"
-                        onClick={() => {
-                          if (!disciplineInput) return
-                          addDiscipline(disciplineInput)
-                          setDisciplineInput('')
-                          setDiscipline(disciplineInput)
-                          setSubject('')
-                          setShowDisciplines(false)
-                        }}
+                        onClick={handlAddDiscipline}
                       >
                         Adicionar
                       </Button>
@@ -186,14 +198,7 @@ export function ChronoStudyCard() {
                         type="button"
                         className="w-auto lg:flex-1"
                         disabled={!selectedDiscipline}
-                        onClick={() => {
-                          if (!selectedDiscipline) return
-                          if (!subjectInput) return
-                          addSubject(selectedDiscipline, subjectInput)
-                          setSubjectInput('')
-                          setSubject(subjectInput)
-                          setShowSubjects(false)
-                        }}
+                        onClick={handleAddSubject}
                       >
                         Adicionar
                       </Button>
