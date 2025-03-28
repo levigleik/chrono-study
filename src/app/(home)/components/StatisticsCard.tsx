@@ -1,4 +1,3 @@
-// Original path: src/app/home/components/HistoryItem.tsx
 'use client'
 
 import { Card, CardContent } from '@/components/ui/card'

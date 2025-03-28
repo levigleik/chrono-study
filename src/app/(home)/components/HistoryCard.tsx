@@ -1,4 +1,3 @@
-// Original path: src/app/home/components/HistoryCard.tsx
 'use client'
 import { Card, CardContent } from '@/components/ui/card'
 import { useTimerStore } from '@/store/timerStore'
