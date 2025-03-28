@@ -24,7 +24,7 @@ import {
 } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 
-import Theme from '@/components/theme'
+import Theme from '@/app/(home)/components/Theme'
 import { Button } from '@/components/ui/button'
 import {
   Table,

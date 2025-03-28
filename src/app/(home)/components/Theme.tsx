@@ -21,6 +21,8 @@ export default function Theme({ className }: { className?: string }) {
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className={cn('h-8 rounded-full', className)}
             size="icon"
+            aria-label="Trocar tema"
+            data-testid={theme === 'dark' ? 'sun-icon' : 'moon-icon'}
           >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
           </Button>
