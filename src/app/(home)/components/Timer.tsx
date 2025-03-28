@@ -9,12 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
@@ -53,27 +47,27 @@ export function Timer() {
     toast.success('Tempo salvo com sucesso!')
   }, [saveSession])
 
-  useEffect(() => {
-    const rBtn = (e: KeyboardEvent) => {
-      if (e.key === 'r') {
-        e.preventDefault()
-        resetTimer()
-      } else if (e.key === 's' && seconds !== 0) {
-        e.preventDefault()
-        setShowSaveDialog(true)
-      } else if (e.key === ' ' || e.code === 'Space') {
-        e.preventDefault()
-        if (isRunning) {
-          pauseTimer()
-        } else {
-          startTimer()
-        }
-      }
-    }
+  // useEffect(() => {
+  //   const rBtn = (e: KeyboardEvent) => {
+  //     if (e.key === 'r') {
+  //       e.preventDefault()
+  //       resetTimer()
+  //     } else if (e.key === 's' && seconds !== 0) {
+  //       e.preventDefault()
+  //       setShowSaveDialog(true)
+  //     } else if (e.key === ' ' || e.code === 'Space') {
+  //       e.preventDefault()
+  //       if (isRunning) {
+  //         pauseTimer()
+  //       } else {
+  //         startTimer()
+  //       }
+  //     }
+  //   }
 
-    document.addEventListener('keydown', rBtn)
-    return () => document.removeEventListener('keydown', rBtn)
-  }, [resetTimer, handleSave, seconds, isRunning, pauseTimer, startTimer])
+  //   document.addEventListener('keydown', rBtn)
+  //   return () => document.removeEventListener('keydown', rBtn)
+  // }, [resetTimer, handleSave, seconds, isRunning, pauseTimer, startTimer])
 
   useEffect(() => {
     const updateTimer = () => {
@@ -97,100 +91,63 @@ export function Timer() {
           {formatTime(seconds)}
         </span>
       </div>
-      <TooltipProvider>
-        <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              {!isRunning ? (
-                <Button
-                  onClick={startTimer}
-                  disabled={!selectedSubject || !selectedDiscipline}
-                  size="lg"
-                  type="button"
-                  className="w-auto lg:flex-1"
-                >
-                  <PlayIcon className="mr-2 h-4 w-4" />
-                  Iniciar
-                </Button>
-              ) : (
-                <Button
-                  onClick={pauseTimer}
-                  variant="secondary"
-                  size="lg"
-                  type="button"
-                  className="w-auto lg:flex-1"
-                >
-                  <PauseIcon className="mr-2 h-4 w-4" />
-                  Pausar
-                </Button>
-              )}
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              Clique ou pressione a tecla{' '}
-              <span className="font-bold italic">
-                <kbd>espaço</kbd>
-              </span>{' '}
-              para iniciar ou pausar o cronômetro.
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={
-                  seconds === 0
-                    ? () => {
-                        resetTimer()
-                      }
-                    : () => {
-                        setShowResetDialog(true)
-                      }
+      <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
+        {!isRunning ? (
+          <Button
+            onClick={startTimer}
+            disabled={!selectedSubject || !selectedDiscipline}
+            size="lg"
+            type="button"
+            className="w-auto lg:flex-1"
+          >
+            <PlayIcon className="mr-2 h-4 w-4" />
+            Iniciar
+          </Button>
+        ) : (
+          <Button
+            onClick={pauseTimer}
+            variant="secondary"
+            size="lg"
+            type="button"
+            className="w-auto lg:flex-1"
+          >
+            <PauseIcon className="mr-2 h-4 w-4" />
+            Pausar
+          </Button>
+        )}
+        <Button
+          onClick={
+            seconds === 0
+              ? () => {
+                  resetTimer()
                 }
-                variant="outline"
-                size="lg"
-                className="w-auto lg:flex-1"
-                type="button"
-                disabled={
-                  seconds === 0 && !selectedSubject && !selectedDiscipline
+              : () => {
+                  setShowResetDialog(true)
                 }
-              >
-                <RotateCcwIcon className="mr-2 h-4 w-4" />
-                Resetar
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              Clique ou pressione a tecla{' '}
-              <span className="font-bold italic">
-                <kbd>r</kbd>
-              </span>{' '}
-              para resetar o cronômetro.
-            </TooltipContent>
-          </Tooltip>{' '}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => {
-                  pauseTimer()
-                  setShowSaveDialog(true)
-                }}
-                variant="default"
-                size="lg"
-                className="w-auto lg:flex-1"
-                disabled={seconds === 0}
-              >
-                <SaveIcon className="mr-2 h-4 w-4" />
-                Salvar
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              Clique ou pressione a tecla{' '}
-              <span className="font-bold italic">
-                <kbd>s</kbd>
-              </span>{' '}
-              para salvar o tempo.
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      </TooltipProvider>
+          }
+          variant="outline"
+          size="lg"
+          className="w-auto lg:flex-1"
+          type="button"
+          disabled={seconds === 0 && !selectedSubject && !selectedDiscipline}
+        >
+          <RotateCcwIcon className="mr-2 h-4 w-4" />
+          Resetar
+        </Button>
+        <Button
+          onClick={() => {
+            pauseTimer()
+            setShowSaveDialog(true)
+          }}
+          variant="default"
+          size="lg"
+          className="w-auto lg:flex-1"
+          disabled={seconds === 0}
+        >
+          <SaveIcon className="mr-2 h-4 w-4" />
+          Salvar
+        </Button>
+      </div>
 
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
         <DialogContent>
