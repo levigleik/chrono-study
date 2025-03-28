@@ -1,13 +1,6 @@
 'use client'
 import Theme from '@/app/(home)/components/Theme'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -17,24 +10,15 @@ import {
 } from '@/components/ui/select'
 import { useDisciplineStore } from '@/store/disciplineStore'
 import { useTimerStore } from '@/store/timerStore'
-import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
+import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
 
 export function ChronoStudyCard() {
-  const {
-    selectedSubject,
-    setDiscipline,
-    selectedDiscipline,
-    setSubject,
-    isRunning,
-  } = useTimerStore()
+  const { selectedSubject, setDiscipline, selectedDiscipline, setSubject } =
+    useTimerStore()
 
-  const {
-    disciplines: disciplinesData,
-    addDiscipline,
-    addSubject,
-  } = useDisciplineStore()
+  const { disciplines: disciplinesData } = useDisciplineStore()
 
   const subjects = disciplinesData.find(
     (discipline) => discipline.name === selectedDiscipline,
@@ -43,31 +27,10 @@ export function ChronoStudyCard() {
   const [showDisciplines, setShowDisciplines] = useState(false)
   const [showSubjects, setShowSubjects] = useState(false)
 
-  const [disciplineInput, setDisciplineInput] = useState('')
-  const [subjectInput, setSubjectInput] = useState('')
-
   const handleDisciplineChange = (value: string) => {
     setDiscipline(value)
     setSubject('')
   }
-  const handlAddDiscipline = () => {
-    if (!disciplineInput) return
-    addDiscipline(disciplineInput)
-    setDisciplineInput('')
-    setDiscipline(disciplineInput)
-    setSubject('')
-    setShowDisciplines(false)
-  }
-
-  const handleAddSubject = () => {
-    if (!selectedDiscipline) return
-    if (!subjectInput) return
-    addSubject(selectedDiscipline, subjectInput)
-    setSubjectInput('')
-    setSubject(subjectInput)
-    setShowSubjects(false)
-  }
-
   return (
     <div className="flex w-full flex-col">
       <div className="mb-4 flex items-baseline justify-between">
@@ -103,45 +66,11 @@ export function ChronoStudyCard() {
                   </SelectContent>
                 </Select>
 
-                <Popover
+                <AddDisciplineSubject
                   open={showDisciplines}
                   onOpenChange={setShowDisciplines}
-                >
-                  <PopoverTrigger asChild>
-                    <Button
-                      onClick={() => setShowDisciplines(true)}
-                      className="rounded-full"
-                      size="icon"
-                      disabled={isRunning}
-                    >
-                      {<PlusIcon />}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="">
-                    <div className="grid gap-4">
-                      <div className="space-y-2">
-                        <h4 className="leading-none font-medium">
-                          Adicionar disciplina
-                        </h4>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <Input
-                          className="col-span-2 h-8"
-                          placeholder="Nome da disciplina"
-                          value={disciplineInput}
-                          onChange={(e) => setDisciplineInput(e.target.value)}
-                        />
-                      </div>
-                      <Button
-                        type="button"
-                        className="w-auto lg:flex-1"
-                        onClick={handlAddDiscipline}
-                      >
-                        Adicionar
-                      </Button>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                  type="discipline"
+                />
               </div>
             </div>
             <div className="flex flex-1 flex-col gap-4">
@@ -168,43 +97,11 @@ export function ChronoStudyCard() {
                     )}
                   </SelectContent>
                 </Select>
-                <Popover open={showSubjects} onOpenChange={setShowSubjects}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      onClick={() => setShowSubjects(true)}
-                      className="rounded-full"
-                      size="icon"
-                      disabled={isRunning || !selectedDiscipline}
-                    >
-                      {<PlusIcon />}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="">
-                    <div className="grid gap-4">
-                      <div className="space-y-2">
-                        <h4 className="leading-none font-medium">
-                          Adicionar tema
-                        </h4>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <Input
-                          className="col-span-2 h-8"
-                          placeholder="Nome do tema"
-                          value={subjectInput}
-                          onChange={(e) => setSubjectInput(e.target.value)}
-                        />
-                      </div>
-                      <Button
-                        type="button"
-                        className="w-auto lg:flex-1"
-                        disabled={!selectedDiscipline}
-                        onClick={handleAddSubject}
-                      >
-                        Adicionar
-                      </Button>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                <AddDisciplineSubject
+                  open={showSubjects}
+                  onOpenChange={setShowSubjects}
+                  type="subject"
+                />
               </div>
             </div>
           </div>

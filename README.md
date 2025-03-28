@@ -4,9 +4,10 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 
 ## 🚀 Tecnologias e Bibliotecas Utilizadas
 
-- **React**: Biblioteca para construção de interfaces de usuário.
 - **Next.js**: Framework para renderização do lado do servidor (SSR) e geração de sites estáticos.
 - **Tailwind CSS**: Framework de utilitários CSS para estilização rápida e responsiva.
+- **zod**: Biblioteca de validação e parsing de esquemas TypeScript-first, utilizada para garantir a integridade dos dados no projeto.
+- **react-hook-form**: Biblioteca para gerenciamento de formulários, proporcionando uma experiência simples e eficiente.
 - **next-themes**: Gerenciamento de temas (claro e escuro).
 - **lucide-react**: Ícones modernos e leves.
 - **shadcn/ui**: Biblioteca de componentes reutilizáveis e estilizáveis.
