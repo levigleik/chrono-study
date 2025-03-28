@@ -21,3 +21,8 @@ export interface TimerState {
   selectedSubject: string | null
   selectedDiscipline: string | null
 }
+
+export interface DisciplineState {
+  name: string
+  subjects: string[]
+}

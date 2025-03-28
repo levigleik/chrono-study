@@ -1,14 +1,14 @@
 export const disciplinesData = [
   {
-    discipline: 'Matemática',
+    name: 'Matemática',
     subjects: ['Álgebra Linear', 'Cálculo Diferencial'],
   },
   {
-    discipline: 'História',
+    name: 'História',
     subjects: ['Idade Média', 'Revolução Francesa'],
   },
   {
-    discipline: 'Física',
+    name: 'Física',
     subjects: ['Mecânica Clássica', 'Eletromagnetismo'],
   },
-] as const
+]

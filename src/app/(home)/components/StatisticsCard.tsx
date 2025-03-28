@@ -61,7 +61,11 @@ export const columns: ColumnDef<SubjectTable>[] = [
     ),
     cell: ({ row }) => {
       const seconds = parseFloat(row.getValue('totalDuration'))
-      const formatted = `${Math.floor(seconds / 60)}h ${seconds % 60}m`
+      const formatted = `${
+        Math.floor(seconds / 3600) > 0
+          ? `${Math.floor(seconds / 3600)}h ${Math.floor((seconds % 3600) / 60)}min`
+          : `${Math.floor(seconds / 60)}min ${seconds % 60}s`
+      }`
 
       return <div className="text-right font-bold">{formatted}</div>
     },
@@ -138,8 +142,9 @@ export function StatisticsCard() {
                           />
                           <div>{name}</div>
                           <div>
-                            {Math.floor(Number(value ?? 0) / 60)}h{' '}
-                            {Number(value ?? 0) % 60}m
+                            {Math.floor(Number(value) / 3600) > 0
+                              ? `${Math.floor(Number(value) / 3600)}h ${Math.floor((Number(value) % 3600) / 60)}min`
+                              : `${Math.floor(Number(value) / 60)}min ${Number(value) % 60}s`}
                           </div>
                         </div>
                       )}
