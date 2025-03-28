@@ -1,4 +1,11 @@
+import { ChartConfig } from '@/components/ui/chart'
+import {
+  createColumnHelper,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import { render, screen } from '@testing-library/react'
+import { StatisticsCard } from '../components/StatisticsCard'
 
 // Mock ResizeObserver for the test environment
 beforeAll(() => {
@@ -8,15 +15,8 @@ beforeAll(() => {
     disconnect() {}
   }
 })
-import { StatisticsCard } from '../statistics/StatisticsCard'
-import {
-  useReactTable,
-  createColumnHelper,
-  getCoreRowModel,
-} from '@tanstack/react-table'
-import { ChartConfig } from '@/components/ui/chart'
 
-import { Statistics } from '../statistics/Statistics'
+import { Statistics } from '../components/Statistics'
 
 const mockChartData = [
   { name: 'Matemática', duration: 7200, fill: '#ff0000' },

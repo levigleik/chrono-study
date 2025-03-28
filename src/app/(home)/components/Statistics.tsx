@@ -14,8 +14,8 @@ import {
 import Theme from '@/app/(home)/components/Theme'
 import { useTimerStore } from '@/store/timerStore'
 import { useMemo, useState } from 'react'
+import { calculateTopStudied, columns } from '../utils'
 import { StatisticsCard } from './StatisticsCard'
-import { calculateTopStudied, columns } from './utils'
 
 export function Statistics() {
   const [sorting, setSorting] = useState<SortingState>([])

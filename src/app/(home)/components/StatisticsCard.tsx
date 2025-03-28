@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { columns } from './utils'
+import { columns } from '../utils'
 
 interface StatisticsCardProps {
   chartData?: {

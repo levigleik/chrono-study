@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { useTheme } from 'next-themes'
-import Theme from '../Theme'
+import Theme from '../components/Theme'
 
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),

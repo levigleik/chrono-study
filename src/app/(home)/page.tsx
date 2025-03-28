@@ -1,6 +1,6 @@
 import { ChronoStudyCard } from './components/ChronoStudyCard'
 import { HistoryCard } from './components/HistoryCard'
-import { Statistics } from './components/statistics/Statistics'
+import { Statistics } from './components/Statistics'
 
 export default function Home() {
   return (
