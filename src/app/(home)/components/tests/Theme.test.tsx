@@ -1,13 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { useTheme } from 'next-themes'
-import Theme from './Theme'
+import Theme from '../Theme'
 
 jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
 }))
 
 describe('Theme Component', () => {
-  it('renders the button with the correct icon for dark theme', () => {
+  it('renderiza o botão com o ícone correto para o tema escuro', () => {
     ;(useTheme as jest.Mock).mockReturnValue({
       theme: 'dark',
       setTheme: jest.fn(),
@@ -19,7 +19,7 @@ describe('Theme Component', () => {
     expect(screen.getByTestId('sun-icon')).toBeInTheDocument()
   })
 
-  it('renders the button with the correct icon for light theme', () => {
+  it('renderiza o botão com o ícone correto para o tema claro', () => {
     ;(useTheme as jest.Mock).mockReturnValue({
       theme: 'light',
       setTheme: jest.fn(),
@@ -31,7 +31,7 @@ describe('Theme Component', () => {
     expect(screen.getByTestId('moon-icon')).toBeInTheDocument()
   })
 
-  it('toggles theme on button click', () => {
+  it('alterna o tema ao clicar no botão', () => {
     const setThemeMock = jest.fn()
     ;(useTheme as jest.Mock).mockReturnValue({
       theme: 'dark',

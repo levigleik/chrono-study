@@ -1,6 +1,6 @@
 import { ChronoStudyCard } from './components/ChronoStudyCard'
 import { HistoryCard } from './components/HistoryCard'
-import { StatisticsCard } from './components/StatisticsCard'
+import { Statistics } from './components/statistics/Statistics'
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       </div>
 
       <div className="w-full flex-grow lg:max-w-1/3">
-        <StatisticsCard />
+        <Statistics />
       </div>
     </div>
   )

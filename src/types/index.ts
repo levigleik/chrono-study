@@ -26,3 +26,5 @@ export interface DisciplineState {
   name: string
   subjects: string[]
 }
+
+export type SubjectTable = { name: string; duration: number }
