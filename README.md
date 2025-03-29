@@ -11,7 +11,7 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 - **next-themes**: Gerenciamento de temas (claro e escuro).
 - **lucide-react**: Ícones modernos e leves.
 - **shadcn/ui**: Biblioteca de componentes reutilizáveis e estilizáveis.
-- **react-toastify**: Utilizado para exibir o alerta de sucesso ao salvar o tempo.
+- **sonner**: Utilizado para exibir o alerta de sucesso ao salvar o tempo.
 - **next/font**: Selecionado Libre_Baskerville como fonte padrão do projeto.
 
 ## 🌟 Funcionalidades

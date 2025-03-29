@@ -1,13 +1,12 @@
 'use client'
 
 import { ErrorBoundary } from 'react-error-boundary'
-import { Bounce, ToastContainer } from 'react-toastify'
 
-import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Button } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/sonner'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false)
@@ -22,6 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ErrorBoundary
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       fallbackRender={({ resetErrorBoundary }: any) => (
         <div className="flex h-screen flex-col items-center justify-center">
           <h1 className="text-2xl font-bold">Ocorreu um erro</h1>
@@ -37,22 +37,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       )}
     >
       <ThemeProvider attribute="class" defaultTheme="dark">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-          transition={Bounce}
-          toastClassName={cn(
-            'min-h-10 cursor-pointer',
-            'overflow-hidden rounded-[25px] bg-gray-900 p-3 text-white',
-          )}
+        <Toaster
+          position="top-center"
+          richColors
+          toastOptions={{ duration: 4000 }}
         />
         {children}
       </ThemeProvider>

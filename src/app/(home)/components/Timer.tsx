@@ -13,7 +13,7 @@ import { useTimerStore } from '@/store/timerStore'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'sonner'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
