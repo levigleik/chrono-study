@@ -65,7 +65,6 @@ export function ChronoStudyCard() {
                     ))}
                   </SelectContent>
                 </Select>
-
                 <AddDisciplineSubject
                   open={showDisciplines}
                   onOpenChange={setShowDisciplines}

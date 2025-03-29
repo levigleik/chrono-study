@@ -9,6 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -26,16 +32,24 @@ export function HistoryCard() {
         <div className="items flex w-full justify-between space-x-2">
           <h1 className="text-2xl font-bold">Chrono Study</h1>
         </div>
-        <Button
-          onClick={() => setShowClearDialog(true)}
-          className="rounded-full"
-          size="icon"
-          disabled={sessions.length === 0}
-          variant="destructive"
-          aria-label="Adicionar disciplina"
-        >
-          {<TrashIcon />}
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => setShowClearDialog(true)}
+                className="rounded-full"
+                size="icon"
+                disabled={sessions.length === 0}
+                variant="destructive"
+                aria-label="Excluir histórico"
+              >
+                {<TrashIcon />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Excluir histórico</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
           <DialogContent>
             <DialogHeader>

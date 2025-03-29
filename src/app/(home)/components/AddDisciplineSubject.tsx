@@ -14,6 +14,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { useDisciplineStore } from '@/store/disciplineStore'
 import { useTimerStore } from '@/store/timerStore'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -65,41 +71,53 @@ export function AddDisciplineSubject({
   }
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <PopoverTrigger asChild>
-        <Button
-          onClick={() => onOpenChange(!open)}
-          className="rounded-full"
-          size="icon"
-          disabled={isRunning}
-        >
-          {<PlusIcon />}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="gap-4">
-                  <FormLabel>
-                    Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Digite o nome" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-auto lg:flex-1">
-              Salvar
-            </Button>
-          </form>
-        </Form>
-      </PopoverContent>
-    </Popover>
+    <TooltipProvider>
+      <Popover open={open} onOpenChange={onOpenChange}>
+        <Tooltip>
+          <PopoverTrigger asChild>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => onOpenChange(!open)}
+                className="rounded-full"
+                size="icon"
+                disabled={isRunning}
+                aria-label={`Adicionar ${
+                  type === 'discipline' ? 'disciplina' : 'tema'
+                }`}
+              >
+                {<PlusIcon />}
+              </Button>
+            </TooltipTrigger>
+          </PopoverTrigger>
+          <TooltipContent side="bottom">
+            Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
+          </TooltipContent>
+        </Tooltip>
+        <PopoverContent className="">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="gap-4">
+                    <FormLabel>
+                      Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite o nome" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-auto lg:flex-1">
+                Salvar
+              </Button>
+            </form>
+          </Form>
+        </PopoverContent>
+      </Popover>
+    </TooltipProvider>
   )
 }
