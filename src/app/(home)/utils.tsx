@@ -17,7 +17,7 @@ export const calculateTopStudied = (
   return Array.from(studyMap.entries())
     .map(([name, duration]) => ({ name, duration }))
     .sort((a, b) => b.duration - a.duration)
-    .slice(0, 3)
+    .slice(0, 5)
 }
 
 export const columns: ColumnDef<SubjectTable>[] = [

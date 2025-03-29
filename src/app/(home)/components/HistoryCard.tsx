@@ -84,7 +84,7 @@ export function HistoryCard() {
           ))}
           {dataSessionsSorted.length === 0 && (
             <div className="flex h-full w-full items-center justify-center">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-300">
                 Nenhum histórico encontrado
               </p>
             </div>

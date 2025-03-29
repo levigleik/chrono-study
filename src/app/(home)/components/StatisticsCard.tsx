@@ -40,7 +40,7 @@ export function StatisticsCard({
 }: StatisticsCardProps) {
   return (
     <Card className="flex h-full items-center">
-      <CardContent className="overflow-auto px-4">
+      <CardContent className="w-full overflow-auto px-4">
         <h3 className="mb-8 text-lg font-bold">Disciplinas mais estudadas</h3>
         {chartData && chartData?.length > 0 && (
           <ChartContainer
@@ -97,7 +97,7 @@ export function StatisticsCard({
           </div>
         )}
 
-        <h3 className="mb-8 text-lg font-bold">Temas mais estudados</h3>
+        <h3 className="my-8 text-lg font-bold">Temas mais estudados</h3>
         <TableComponent>
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (

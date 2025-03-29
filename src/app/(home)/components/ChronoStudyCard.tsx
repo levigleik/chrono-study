@@ -49,7 +49,10 @@ export function ChronoStudyCard() {
                   onValueChange={handleDisciplineChange}
                   value={selectedDiscipline || ''}
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger
+                    className="w-full"
+                    aria-label="Selecione uma disciplina"
+                  >
                     <SelectValue placeholder="Selecione uma disciplina" />
                   </SelectTrigger>
                   <SelectContent>
@@ -80,7 +83,10 @@ export function ChronoStudyCard() {
                   value={selectedSubject || ''}
                   disabled={!selectedDiscipline}
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger
+                    className="w-full"
+                    aria-label="Selecione um tema"
+                  >
                     <SelectValue placeholder="Selecione um tema" />
                   </SelectTrigger>
                   <SelectContent>
