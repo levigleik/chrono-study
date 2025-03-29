@@ -44,7 +44,7 @@ export function ChronoStudyCard() {
           <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex flex-1 flex-col gap-4">
               <span>Disciplina</span>
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 <Select
                   onValueChange={handleDisciplineChange}
                   value={selectedDiscipline || ''}
@@ -77,7 +77,7 @@ export function ChronoStudyCard() {
             </div>
             <div className="flex flex-1 flex-col gap-4">
               <span>Tema</span>
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 <Select
                   onValueChange={setSubject}
                   value={selectedSubject || ''}

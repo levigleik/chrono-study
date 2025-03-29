@@ -37,8 +37,7 @@ export function HistoryCard() {
             <TooltipTrigger asChild>
               <Button
                 onClick={() => setShowClearDialog(true)}
-                className="rounded-full"
-                size="icon"
+                className="h-8 w-8 rounded-full"
                 disabled={sessions.length === 0}
                 variant="destructive"
                 aria-label="Excluir histórico"

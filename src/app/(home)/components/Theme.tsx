@@ -19,8 +19,7 @@ export default function Theme({ className }: { className?: string }) {
           <Button
             variant="outline"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={cn('h-8 rounded-full', className)}
-            size="icon"
+            className={cn('h-8 w-8 rounded-full p-0', className)}
             aria-label="Trocar tema"
             data-testid={theme === 'dark' ? 'sun-icon' : 'moon-icon'}
           >

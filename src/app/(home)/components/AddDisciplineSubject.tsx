@@ -78,8 +78,7 @@ export function AddDisciplineSubject({
             <TooltipTrigger asChild>
               <Button
                 onClick={() => onOpenChange(!open)}
-                className="rounded-full"
-                size="icon"
+                className="h-8 w-8 rounded-full"
                 disabled={isRunning}
                 aria-label={`Adicionar ${
                   type === 'discipline' ? 'disciplina' : 'tema'
