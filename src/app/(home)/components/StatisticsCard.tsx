@@ -93,7 +93,7 @@ export function StatisticsCard({
         )}
         {chartData?.length === 0 && (
           <div className="flex h-24 items-center justify-center">
-            <p className="text-sm text-gray-500">Nenhum histórico encontrado</p>
+            <p className="text-sm text-gray-300">Nenhum histórico encontrado</p>
           </div>
         )}
 
@@ -138,7 +138,7 @@ export function StatisticsCard({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-sm text-gray-500"
+                  className="h-24 text-center text-sm text-gray-300"
                 >
                   Nenhum histórico encontrado
                 </TableCell>
