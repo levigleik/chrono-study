@@ -23,7 +23,62 @@ export const useTimerStore = create<TimerStore>()(
       elapsedTime: 0,
       selectedSubject: null,
       selectedDiscipline: null,
-      sessions: [],
+      sessions: [
+        {
+          subject: 'Rochedos',
+          discipline: 'Geografia',
+          duration: 4,
+          timestamp: 1743252705078,
+        },
+        {
+          subject: 'Reino animalia',
+          discipline: 'Biologia',
+          duration: 2,
+          timestamp: 1743252669606,
+        },
+        {
+          subject: 'Revolução Francesa',
+          discipline: 'História',
+          duration: 1,
+          timestamp: 1743252607775,
+        },
+        {
+          subject: 'Álgebra Linear',
+          discipline: 'Matemática',
+          duration: 1,
+          timestamp: 1743252599153,
+        },
+        {
+          subject: 'Eletromagnetismo',
+          discipline: 'Física',
+          duration: 1,
+          timestamp: 1743252590259,
+        },
+        {
+          subject: 'Mecânica Clássica',
+          discipline: 'Física',
+          duration: 1,
+          timestamp: 1743252583937,
+        },
+        {
+          subject: 'Revolução Francesa',
+          discipline: 'História',
+          duration: 1,
+          timestamp: 1743252577507,
+        },
+        {
+          subject: 'Cálculo Diferencial',
+          discipline: 'Matemática',
+          duration: 1,
+          timestamp: 1743252571133,
+        },
+        {
+          subject: 'Álgebra Linear',
+          discipline: 'Matemática',
+          duration: 2,
+          timestamp: 1743252726172,
+        },
+      ],
 
       setSubject: (subject) => set({ selectedSubject: subject }),
       setDiscipline: (discipline) => set({ selectedDiscipline: discipline }),
