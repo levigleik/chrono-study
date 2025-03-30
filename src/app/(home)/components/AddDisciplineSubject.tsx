@@ -23,6 +23,7 @@ import { useTimerStore } from '@/store/timerStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 const formSchema = z.object({
@@ -55,6 +56,11 @@ export function AddDisciplineSubject({
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
     onSubmit(values)
+    toast.success(
+      type === 'discipline'
+        ? 'Disciplina adicionada com sucesso'
+        : 'Tema adicionado com sucesso',
+    )
     form.reset()
     onOpenChange(false)
   }
