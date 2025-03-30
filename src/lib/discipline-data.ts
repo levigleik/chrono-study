@@ -11,4 +11,8 @@ export const disciplinesData = [
     name: 'Física',
     subjects: ['Mecânica Clássica', 'Eletromagnetismo'],
   },
+  {
+    name: 'Direito Penal',
+    subjects: ['Culpabilidade', 'Prisão cautelar'],
+  },
 ]
