@@ -1,5 +1,8 @@
 # Chrono Study
 
+[<img src="dashboard.png" alt="dashboard">](https://chrono-study.vercel.app/)
+**Deploy**: [https://chrono-study.vercel.app/](https://chrono-study.vercel.app/)
+
 Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerenciamento de tempo e estudos. Ele utiliza uma estrutura modular e moderna, com suporte a temas (claro e escuro) e componentes reutilizáveis.
 
 ## 🚀 Tecnologias e Bibliotecas Utilizadas
@@ -25,48 +28,63 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 O projeto segue uma estrutura modular, com componentes organizados por página e reutilizáveis:
 
 ```plaintext
-src
-├── app
-│   ├── (home)
-│   │   ├── components
-│   │   │   ├── ChronoStudyCard.tsx
-│   │   │   ├── HistoryCard.tsx
-│   │   │   ├── HistoryItem.tsx
-│   │   │   ├── StatisticsCard.tsx
-│   │   │   └── Timer.tsx
-│   │   ├── types
-│   │   │   └── index.ts
-│   │   ├── utils
-│   │   │   └── index.ts
+├── src
+│   ├── app
+│   │   ├── (home)
+│   │   │   ├── components
+│   │   │   │   ├── AddDisciplineSubject.tsx
+│   │   │   │   ├── ChronoStudyCard.tsx
+│   │   │   │   ├── HistoryCard.tsx
+│   │   │   │   ├── HistoryItem.tsx
+│   │   │   │   ├── Statistics.tsx
+│   │   │   │   ├── StatisticsCard.tsx
+│   │   │   │   ├── Theme.tsx
+│   │   │   │   └── Timer.tsx
+│   │   │   ├── tests
+│   │   │   │   ├── AddDisciplineSubject.test.tsx
+│   │   │   │   ├── ChronoStudyCard.test.tsx
+│   │   │   │   ├── HelperForm.tsx
+│   │   │   │   ├── HistoryItem.test.tsx
+│   │   │   │   ├── Statistics.test.tsx
+│   │   │   │   ├── Theme.test.tsx
+│   │   │   │   └── Timer.test.tsx
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   └── utils.tsx
+│   │   ├── globals.css
 │   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── providers.tsx
-├── components
-│   ├── providers
-│   │   └── theme-provider.tsx
-│   ├── ui
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── chart.tsx
-│   │   ├── dialog.tsx
-│   │   ├── dropdown-menu.tsx
-│   │   ├── form.tsx
-│   │   ├── label.tsx
-│   │   ├── resizable.tsx
-│   │   ├── select.tsx
-│   │   ├── table.tsx
-│   │   └── tooltip.tsx
-│   └── theme.tsx
-├── lib
-│   ├── discipline-data.ts
-│   ├── use-interval.tsx
-│   └── utils.ts
-├── store
-│   └── timerStore.ts
-└── types
-│   └── index.ts
+│   │   └── providers.tsx
+│   ├── components
+│   │   ├── hooks
+│   │   │   └── use-interval.tsx
+│   │   ├── providers
+│   │   │   ├── theme-provider.tsx
+│   │   │   └── tooltip-provider.tsx
+│   │   └── ui
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       ├── chart.tsx
+│   │       ├── dialog.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── form.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── popover.tsx
+│   │       ├── resizable.tsx
+│   │       ├── select.tsx
+│   │       ├── sonner.tsx
+│   │       ├── table.tsx
+│   │       └── tooltip.tsx
+│   ├── lib
+│   │   ├── discipline-data.ts
+│   │   └── utils.ts
+│   ├── store
+│   │   ├── disciplineStore.ts
+│   │   └── timerStore.ts
+│   └── types
+│       └── index.ts
+├── jest.config.ts
+├── jest.setup.ts
 └── next.config.ts
 ```
 
