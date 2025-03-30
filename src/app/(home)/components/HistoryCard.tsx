@@ -18,6 +18,7 @@ import { useTimerStore } from '@/store/timerStore'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { HistoryItem } from './HistoryItem'
+import { toast } from 'sonner'
 
 export function HistoryCard() {
   const { sessions, clearSessions } = useTimerStore((state) => state)
@@ -65,6 +66,7 @@ export function HistoryCard() {
                 onClick={() => {
                   clearSessions()
                   setShowClearDialog(false)
+                  toast.success('Histórico deletado com sucesso')
                 }}
               >
                 Confirmar
