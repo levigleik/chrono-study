@@ -14,13 +14,14 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 - **next-themes**: Gerenciamento de temas (claro e escuro).
 - **lucide-react**: Ícones modernos e leves.
 - **shadcn/ui**: Biblioteca de componentes reutilizáveis e estilizáveis.
-- **sonner**: Utilizado para exibir o alerta de sucesso ao salvar o tempo.
+- **sonner**: Utilizado para exibir os alertas de sucesso.
 - **next/font**: Selecionado Libre_Baskerville como fonte padrão do projeto.
 
 ## 🌟 Funcionalidades
 
-- **Gerenciamento de tempo**: Controle de atividades com um timer.
+- **Gerenciamento de tempo**: Controle de atividades com um cronômetro.
 - **Histórico**: Visualização de atividades anteriores.
+- **Gráfico**: Apresentação das disciplinas mais estudadas com um gráfico em formato de pizza.
 - **Tema claro/escuro**: Alternância entre temas com suporte a persistência.
 
 ## 📂 Estrutura do Projeto
@@ -102,7 +103,7 @@ O projeto segue uma estrutura modular, com componentes organizados por página e
 Certifique-se de ter instalado:
 
 - **Node.js** (versão 16 ou superior)
-- **npm** ou **yarn**
+- **yarn** ou **npm**
 
 ### Passos para executar
 
@@ -114,17 +115,17 @@ Certifique-se de ter instalado:
 2. Instale as dependências:
 
    ```
-   npm install
-   # ou
    yarn install
+   # ou
+   npm install
    ```
 
 3. Inicie o servidor de desenvolvimento:
 
    ```
-   npm run dev
-   # ou
    yarn dev
+   # ou
+   npm run dev
    ```
 
 4. Abra o navegador e acesse:
