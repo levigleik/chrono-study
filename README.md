@@ -108,7 +108,7 @@ Certifique-se de ter instalado:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/chrono-study.git
+   git clone https://github.com/levigleik/chrono-study.git
    cd chrono-study
    ```
 2. Instale as dependências:
@@ -138,3 +138,4 @@ Certifique-se de ter instalado:
 - build: Gera a build de produção.
 - start: Inicia o servidor em modo de produção.
 - lint: Verifica o código com ESLint.
+- test: Realiza testes com Jest e React Testing Library.
