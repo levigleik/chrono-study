@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/sonner'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false)
@@ -37,12 +38,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
       )}
     >
       <ThemeProvider attribute="class" defaultTheme="dark">
-        <Toaster
-          position="top-center"
-          richColors
-          toastOptions={{ duration: 4000 }}
-        />
-        {children}
+        <TooltipProvider>
+          <Toaster
+            position="top-center"
+            richColors
+            toastOptions={{ duration: 4000 }}
+          />
+          {children}
+        </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
   )

@@ -6,7 +6,7 @@ jest.mock('next-themes', () => ({
   useTheme: jest.fn(),
 }))
 
-describe('Theme Component', () => {
+describe('Component Theme', () => {
   it('renderiza o botão com o ícone correto para o tema escuro', () => {
     ;(useTheme as jest.Mock).mockReturnValue({
       theme: 'dark',

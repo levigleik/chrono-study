@@ -64,7 +64,7 @@ function StatisticsCardWrapper({
   )
 }
 
-describe('StatisticsCard', () => {
+describe('Componente StatisticsCard', () => {
   it('renderiza o título e o botão de tema', () => {
     render(<Statistics />)
     expect(screen.getByText('Estatísticas')).toBeInTheDocument()

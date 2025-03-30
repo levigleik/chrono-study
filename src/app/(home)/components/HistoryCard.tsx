@@ -12,7 +12,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
@@ -32,22 +31,20 @@ export function HistoryCard() {
         <div className="items flex w-full justify-between space-x-2">
           <h1 className="text-2xl font-bold">Chrono Study</h1>
         </div>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => setShowClearDialog(true)}
-                className="h-8 w-8 rounded-full"
-                disabled={sessions.length === 0}
-                variant="destructive"
-                aria-label="Excluir histórico"
-              >
-                {<TrashIcon />}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">Excluir histórico</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => setShowClearDialog(true)}
+              className="h-8 w-8 rounded-full"
+              disabled={sessions.length === 0}
+              variant="destructive"
+              aria-label="Excluir histórico"
+            >
+              {<TrashIcon />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Excluir histórico</TooltipContent>
+        </Tooltip>
 
         <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
           <DialogContent>

@@ -27,9 +27,26 @@ export function ChronoStudyCard() {
   const [showDisciplines, setShowDisciplines] = useState(false)
   const [showSubjects, setShowSubjects] = useState(false)
 
+  const { addDiscipline, addSubject } = useDisciplineStore()
+
   const handleDisciplineChange = (value: string) => {
     setDiscipline(value)
     setSubject('')
+  }
+
+  const handleSubmit = (
+    values: { name: string },
+    type: 'discipline' | 'subject',
+  ) => {
+    if (type === 'discipline') {
+      addDiscipline(values.name)
+      setDiscipline(values.name)
+      setSubject('')
+    } else {
+      if (!selectedDiscipline) return
+      addSubject(selectedDiscipline, values.name)
+      setSubject(values.name)
+    }
   }
   return (
     <div className="flex w-full flex-col">
@@ -72,6 +89,9 @@ export function ChronoStudyCard() {
                   open={showDisciplines}
                   onOpenChange={setShowDisciplines}
                   type="discipline"
+                  onSubmit={async (values) =>
+                    handleSubmit(values, 'discipline')
+                  }
                 />
               </div>
             </div>
@@ -106,6 +126,7 @@ export function ChronoStudyCard() {
                   open={showSubjects}
                   onOpenChange={setShowSubjects}
                   type="subject"
+                  onSubmit={(values) => handleSubmit(values, 'subject')}
                 />
               </div>
             </div>
