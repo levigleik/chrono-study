@@ -102,7 +102,13 @@ export function AddDisciplineSubject({
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-auto lg:flex-1">
+            <Button
+              type="submit"
+              className="w-auto lg:flex-1"
+              aria-label={
+                type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
+              }
+            >
               Salvar
             </Button>
           </form>
