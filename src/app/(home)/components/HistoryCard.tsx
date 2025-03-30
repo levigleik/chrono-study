@@ -17,8 +17,8 @@ import {
 import { useTimerStore } from '@/store/timerStore'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
-import { HistoryItem } from './HistoryItem'
 import { toast } from 'sonner'
+import { HistoryItem } from './HistoryItem'
 
 export function HistoryCard() {
   const { sessions, clearSessions } = useTimerStore((state) => state)
@@ -30,7 +30,7 @@ export function HistoryCard() {
     <div className="flex grow flex-col">
       <div className="my-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="text-2xl font-bold">Chrono Study</h1>
+          <h1 className="text-2xl font-bold">Histórico</h1>
         </div>
         <Tooltip>
           <TooltipTrigger asChild>
