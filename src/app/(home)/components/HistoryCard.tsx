@@ -46,34 +46,6 @@ export function HistoryCard() {
           </TooltipTrigger>
           <TooltipContent side="bottom">Excluir histórico</TooltipContent>
         </Tooltip>
-
-        <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Limpar histórico</DialogTitle>
-              <DialogDescription>
-                Tem certeza de que deseja limpar todo o histórico?
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setShowClearDialog(false)}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={() => {
-                  clearSessions()
-                  setShowClearDialog(false)
-                  toast.success('Histórico deletado com sucesso')
-                }}
-              >
-                Confirmar
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
       <Card className="flex h-full max-h-[350px] w-full grow overflow-auto py-6">
         <CardContent className="overflow-auto px-6">
@@ -89,6 +61,30 @@ export function HistoryCard() {
           )}
         </CardContent>
       </Card>
+      <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Limpar histórico</DialogTitle>
+            <DialogDescription>
+              Tem certeza de que deseja limpar todo o histórico?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowClearDialog(false)}>
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                clearSessions()
+                setShowClearDialog(false)
+                toast.success('Histórico deletado com sucesso')
+              }}
+            >
+              Confirmar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
