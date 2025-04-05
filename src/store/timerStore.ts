@@ -11,6 +11,7 @@ interface TimerStore extends TimerState {
   startTimer: () => void
   pauseTimer: () => void
   resetTimer: () => void
+  syncTimer: () => void
   saveSession: () => void
   clearSessions: () => void
 }
@@ -29,39 +30,45 @@ export const useTimerStore = create<TimerStore>()(
       setDiscipline: (discipline) => set({ selectedDiscipline: discipline }),
 
       startTimer: () => {
-        const { isRunning, timestampStart } = get()
-
+        const { isRunning } = get()
         if (isRunning) return
 
-        set({
-          isRunning: true,
-          timestampStart: timestampStart || Date.now(),
-        })
+        const timestampStart = Date.now()
+        set({ isRunning: true, timestampStart })
+        localStorage.setItem(
+          'timerState',
+          JSON.stringify({
+            ...get(),
+            isRunning: true,
+            timestampStart,
+          }),
+        )
       },
 
       pauseTimer: () => {
         const { isRunning, timestampStart, elapsedTime } = get()
-
         if (!isRunning || timestampStart === 0) return
 
         const newElapsedTime =
           elapsedTime + (Date.now() - timestampStart) / 1000
-
         set({
           isRunning: false,
           elapsedTime: newElapsedTime,
           timestampStart: 0,
         })
+        localStorage.setItem('timerState', JSON.stringify(get()))
       },
 
-      resetTimer: () =>
+      resetTimer: () => {
         set({
           timestampStart: 0,
           elapsedTime: 0,
           isRunning: false,
           selectedSubject: null,
           selectedDiscipline: null,
-        }),
+        })
+        localStorage.setItem('timerState', JSON.stringify(get()))
+      },
 
       saveSession: () => {
         const state = get()
@@ -77,8 +84,6 @@ export const useTimerStore = create<TimerStore>()(
         )
           return
 
-        console.log('Saving session:')
-
         const newSession: StudySession = {
           subject: state.selectedSubject,
           discipline: state.selectedDiscipline,
@@ -86,16 +91,28 @@ export const useTimerStore = create<TimerStore>()(
           timestamp: Date.now(),
         }
 
-        set((state) => ({
+        set({
           sessions: [...state.sessions, newSession],
           timestampStart: 0,
           elapsedTime: 0,
           isRunning: false,
           selectedSubject: null,
           selectedDiscipline: null,
-        }))
+        })
+        localStorage.setItem('timerState', JSON.stringify(get()))
       },
-      clearSessions: () => set({ sessions: [] }),
+
+      syncTimer: () => {
+        const savedState = JSON.parse(
+          localStorage.getItem('timerState') || '{}',
+        )
+        set(savedState)
+      },
+
+      clearSessions: () => {
+        set({ sessions: [] })
+        localStorage.setItem('timerState', JSON.stringify(get()))
+      },
     }),
     {
       name: 'study-timer-storage',
@@ -103,3 +120,12 @@ export const useTimerStore = create<TimerStore>()(
     },
   ),
 )
+
+// Sincroniza o estado ao abrir ou mudar de aba
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'timerState') {
+      useTimerStore.getState().syncTimer()
+    }
+  })
+}

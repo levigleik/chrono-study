@@ -28,6 +28,7 @@ export function Timer() {
     pauseTimer,
     resetTimer,
     saveSession,
+    syncTimer,
   } = useTimerStore()
 
   const [seconds, setSeconds] = useState(0)
@@ -61,6 +62,17 @@ export function Timer() {
     const interval = setInterval(updateTimer, 1000)
     return () => clearInterval(interval)
   }, [isRunning, timestampStart, elapsedTime])
+
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'timerState') {
+        syncTimer()
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
+  }, [syncTimer])
 
   return (
     <>
