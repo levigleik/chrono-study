@@ -1,5 +1,4 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,6 +19,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
+import { Button } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -71,14 +71,17 @@ export function AddDisciplineSubject({
         <PopoverTrigger asChild>
           <TooltipTrigger asChild>
             <Button
-              onClick={() => onOpenChange(!open)}
-              className="h-8 w-8 rounded-full"
+              onPress={() => onOpenChange(!open)}
+              radius="full"
+              isIconOnly
+              size="sm"
               disabled={isRunning}
+              variant="bordered"
               aria-label={`Adicionar ${
                 type === 'discipline' ? 'disciplina' : 'tema'
               }`}
             >
-              {<PlusIcon />}
+              {<PlusIcon size={16} />}
             </Button>
           </TooltipTrigger>
         </PopoverTrigger>
@@ -91,7 +94,6 @@ export function AddDisciplineSubject({
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
             className="grid gap-4"
-            role="form"
           >
             <FormField
               control={form.control}

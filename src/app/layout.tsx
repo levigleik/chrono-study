@@ -1,11 +1,19 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Providers } from './providers'
+import {
+  APP_DEFAULT_TITLE,
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_TITLE_TEMPLATE,
+} from '@/config/site'
 
-const APP_NAME = 'Chrono Study'
-const APP_DEFAULT_TITLE = 'Chrono Study'
-const APP_TITLE_TEMPLATE = '%s - Chrono Study'
-const APP_DESCRIPTION = 'Uma ferramenta para estudantes'
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,

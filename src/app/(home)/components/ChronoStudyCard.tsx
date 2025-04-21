@@ -52,7 +52,7 @@ export function ChronoStudyCard() {
     <div className="flex w-full flex-col">
       <div className="mb-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="text-2xl font-bold">Chrono Study</h1>
+          <h1 className="font-bold text-2xl">Chrono Study</h1>
         </div>
         <Theme className="flex lg:hidden" />
       </div>
