@@ -1,15 +1,10 @@
 'use client'
 import Theme from '@/app/(home)/components/Theme'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+
 import { useDisciplineStore } from '@/store/disciplineStore'
 import { useTimerStore } from '@/store/timerStore'
+import { Select, SelectItem } from '@heroui/react'
 import { useState } from 'react'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
@@ -20,9 +15,9 @@ export function ChronoStudyCard() {
 
   const { disciplines: disciplinesData } = useDisciplineStore()
 
-  const subjects = disciplinesData.find(
-    (discipline) => discipline.name === selectedDiscipline,
-  )?.subjects
+  const subjects = disciplinesData
+    .find((discipline) => discipline.name === selectedDiscipline)
+    ?.subjects?.map((name) => ({ name }))
 
   const [showDisciplines, setShowDisciplines] = useState(false)
   const [showSubjects, setShowSubjects] = useState(false)
@@ -52,7 +47,9 @@ export function ChronoStudyCard() {
     <div className="flex w-full flex-col">
       <div className="mb-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="font-bold text-2xl">Chrono Study</h1>
+          <h1 className="font-bold text-2xl text-secondary-500">
+            Chrono Study
+          </h1>
         </div>
         <Theme className="flex lg:hidden" />
       </div>
@@ -60,74 +57,88 @@ export function ChronoStudyCard() {
         <CardContent className="flex min-h-[300px] flex-col justify-between">
           <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex flex-1 flex-col gap-4">
-              <span>Disciplina</span>
-              <div className="flex items-center gap-2">
+              <div className="mt-4 flex items-center justify-center gap-2">
                 <Select
-                  onValueChange={handleDisciplineChange}
-                  value={selectedDiscipline || ''}
-                >
-                  <SelectTrigger
-                    className="w-full"
-                    aria-label="Selecione uma disciplina"
-                  >
-                    <SelectValue placeholder="Selecione uma disciplina" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {disciplinesData?.length === 0 && (
-                      <SelectItem value={'none'}>
-                        Nenhuma disciplina encontrada
-                      </SelectItem>
-                    )}
-                    {disciplinesData?.map(({ name }) => (
-                      <SelectItem key={name} value={name}>
-                        {name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <AddDisciplineSubject
-                  open={showDisciplines}
-                  onOpenChange={setShowDisciplines}
-                  type="discipline"
-                  onSubmit={async (values) =>
-                    handleSubmit(values, 'discipline')
+                  label={
+                    <div className="mb-2 flex w-full items-center justify-between text-medium">
+                      Disciplina
+                      <AddDisciplineSubject
+                        open={showDisciplines}
+                        onOpenChange={setShowDisciplines}
+                        type="discipline"
+                        onSubmit={async (values) =>
+                          handleSubmit(values, 'discipline')
+                        }
+                      />
+                    </div>
                   }
-                />
+                  classNames={{
+                    label: 'w-full p-0',
+                    value: 'text-medium',
+                  }}
+                  radius="full"
+                  placeholder="Selecione uma"
+                  variant="bordered"
+                  selectedKeys={[selectedDiscipline ?? '']}
+                  labelPlacement={'outside'}
+                  items={disciplinesData ?? []}
+                  onChange={(e) => setDiscipline(e.target?.value)}
+                >
+                  {(item) => (
+                    <SelectItem
+                      key={item.name}
+                      className="capitalize"
+                      textValue={item.name}
+                    >
+                      <div className="flex flex-col gap-2">
+                        <span className="font-bold">{item.name}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
               </div>
             </div>
+
             <div className="flex flex-1 flex-col gap-4">
-              <span>Tema</span>
-              <div className="flex items-center gap-2">
+              <div className="mt-4 flex items-center justify-center gap-2">
                 <Select
-                  onValueChange={setSubject}
-                  value={selectedSubject || ''}
-                  disabled={!selectedDiscipline}
+                  label={
+                    <div className="mb-2 flex w-full items-center justify-between text-medium">
+                      Tema
+                      <AddDisciplineSubject
+                        open={showSubjects}
+                        onOpenChange={setShowSubjects}
+                        type="subject"
+                        onSubmit={(values) => handleSubmit(values, 'subject')}
+                        disabled={!selectedDiscipline}
+                      />
+                    </div>
+                  }
+                  isDisabled={!selectedDiscipline}
+                  classNames={{
+                    label: 'w-full p-0',
+                    value: 'text-medium',
+                  }}
+                  radius="full"
+                  placeholder="Selecione um"
+                  variant="bordered"
+                  selectedKeys={[selectedSubject ?? '']}
+                  labelPlacement={'outside'}
+                  items={subjects ?? []}
+                  onChange={(e) => setSubject(e.target?.value)}
                 >
-                  <SelectTrigger
-                    className="w-full"
-                    aria-label="Selecione um tema"
-                  >
-                    <SelectValue placeholder="Selecione um tema" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {subjects?.map((subject) => (
-                      <SelectItem key={subject} value={subject}>
-                        {subject}
-                      </SelectItem>
-                    ))}
-                    {subjects?.length === 0 && (
-                      <SelectItem value={'none'} disabled>
-                        Nenhum tema encontrado
-                      </SelectItem>
-                    )}
-                  </SelectContent>
+                  {(item) => (
+                    <SelectItem
+                      key={item.name}
+                      className="capitalize"
+                      textValue={item.name}
+                    >
+                      <div className="flex flex-col gap-2">
+                        <span className="font-bold">{item.name}</span>
+                      </div>
+                    </SelectItem>
+                  )}
                 </Select>
-                <AddDisciplineSubject
-                  open={showSubjects}
-                  onOpenChange={setShowSubjects}
-                  type="subject"
-                  onSubmit={(values) => handleSubmit(values, 'subject')}
-                />
               </div>
             </div>
           </div>

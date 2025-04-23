@@ -1,12 +1,13 @@
+import { fontCalistoga, fontMono, fontSans } from '@/config/fonts'
 import type { Metadata, Viewport } from 'next'
-import './globals.css'
-import { Providers } from './providers'
+import '../assets/styles/globals.css'
 import {
   APP_DEFAULT_TITLE,
   APP_DESCRIPTION,
   APP_NAME,
   APP_TITLE_TEMPLATE,
 } from '@/config/site'
+import { Providers } from './providers'
 
 export const viewport: Viewport = {
   themeColor: [
@@ -57,7 +58,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt" translate="no">
-      <body className="antialiased">
+      <body
+        className={`${fontSans.variable} ${fontMono.variable} ${fontCalistoga.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
