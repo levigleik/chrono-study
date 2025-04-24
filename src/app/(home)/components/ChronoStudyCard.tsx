@@ -10,10 +10,19 @@ import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
 
 export function ChronoStudyCard() {
-  const { selectedSubject, setDiscipline, selectedDiscipline, setSubject } =
-    useTimerStore()
+  const {
+    selectedSubject,
+    setDiscipline,
+    selectedDiscipline,
+    setSubject,
+    isRunning,
+  } = useTimerStore()
 
-  const { disciplines: disciplinesData } = useDisciplineStore()
+  const {
+    disciplines: disciplinesData,
+    addDiscipline,
+    addSubject,
+  } = useDisciplineStore()
 
   const subjects = disciplinesData
     .find((discipline) => discipline.name === selectedDiscipline)
@@ -21,8 +30,6 @@ export function ChronoStudyCard() {
 
   const [showDisciplines, setShowDisciplines] = useState(false)
   const [showSubjects, setShowSubjects] = useState(false)
-
-  const { addDiscipline, addSubject } = useDisciplineStore()
 
   const handleDisciplineChange = (value: string) => {
     setDiscipline(value)
@@ -81,6 +88,7 @@ export function ChronoStudyCard() {
                   variant="bordered"
                   selectedKeys={[selectedDiscipline ?? '']}
                   labelPlacement={'outside'}
+                  isDisabled={isRunning}
                   items={disciplinesData ?? []}
                   onChange={(e) => setDiscipline(e.target?.value)}
                 >
@@ -114,7 +122,7 @@ export function ChronoStudyCard() {
                       />
                     </div>
                   }
-                  isDisabled={!selectedDiscipline}
+                  isDisabled={!selectedDiscipline || isRunning}
                   classNames={{
                     label: 'w-full p-0',
                     value: 'text-medium',

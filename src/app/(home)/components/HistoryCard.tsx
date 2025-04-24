@@ -1,5 +1,4 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
@@ -15,6 +14,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
+import { Button } from '@heroui/react'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -30,18 +30,21 @@ export function HistoryCard() {
     <div className="flex grow flex-col">
       <div className="my-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="text-2xl font-bold">Histórico</h1>
+          <h1 className="font-bold text-2xl text-secondary-500">Histórico</h1>
         </div>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              onClick={() => setShowClearDialog(true)}
-              className="h-8 w-8 rounded-full"
+              onPress={() => setShowClearDialog(true)}
+              radius="full"
+              color="danger"
+              isIconOnly
               disabled={sessions.length === 0}
-              variant="destructive"
+              variant="bordered"
+              size="sm"
               aria-label="Excluir histórico"
             >
-              {<TrashIcon />}
+              {<TrashIcon size={16} />}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">Excluir histórico</TooltipContent>
@@ -54,7 +57,7 @@ export function HistoryCard() {
           ))}
           {dataSessionsSorted.length === 0 && (
             <div className="flex h-full w-full items-center justify-center">
-              <p className="text-sm text-gray-300">
+              <p className="text-gray-300 text-sm">
                 Nenhum histórico encontrado
               </p>
             </div>
@@ -70,15 +73,19 @@ export function HistoryCard() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowClearDialog(false)}>
+            <Button
+              variant="bordered"
+              onPress={() => setShowClearDialog(false)}
+            >
               Cancelar
             </Button>
             <Button
-              onClick={() => {
+              onPress={() => {
                 clearSessions()
                 setShowClearDialog(false)
                 toast.success('Histórico deletado com sucesso')
               }}
+              variant="bordered"
             >
               Confirmar
             </Button>

@@ -19,6 +19,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
@@ -70,72 +73,78 @@ export function AddDisciplineSubject({
 
   return (
     <>
-      <Button
-        onPress={() => onOpenChange(!open)}
-        radius="full"
-        isIconOnly
-        size="sm"
-        disabled={isRunning || disabled}
-        variant="bordered"
-        aria-label={`Adicionar ${
-          type === 'discipline' ? 'disciplina' : 'tema'
-        }`}
-      >
-        {<PlusIcon size={16} />}
-      </Button>
-      <Modal isOpen={open} onOpenChange={onOpenChange}>
-        {/*Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}*/}
-        <ModalContent>
-          {(onClose) => (
+      <Popover placement="bottom-end">
+        <PopoverTrigger>
+          <Button
+            // onPress={() => onOpenChange(!open)}
+            radius="full"
+            isIconOnly
+            size="sm"
+            disabled={isRunning || disabled}
+            variant="bordered"
+            aria-label={`Adicionar ${
+              type === 'discipline' ? 'disciplina' : 'tema'
+            }`}
+          >
+            {<PlusIcon size={16} />}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-sm items-start gap-4 p-4">
+          {(titleProps) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
-              </ModalHeader>
-              <ModalBody>
+              <div className="text-left font-semibold text-lg">
+                {type === 'discipline' ? 'Nova disciplina' : 'Novo tema'}
+              </div>
+              {type === 'subject' && (
                 <HighlightCard
                   title="Disicplina"
                   subtitle="Matemática"
                   icon={<IoBook size={36} className="text-white" />}
                 />
-                <Form
-                  onSubmit={form.handleSubmit(handleSubmit)}
-                  className="grid gap-4"
-                >
-                  <Controller
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <Input
-                        variant="bordered"
-                        // label={type === 'discipline' ? 'disciplina' : 'tema'}
-                        placeholder="Digite o nome"
-                        label="Tema"
-                        labelPlacement="outside"
-                        radius="full"
-                        classNames={{
-                          inputWrapper: 'w-full',
-                        }}
-                        {...field}
-                      />
-                    )}
-                  />
-                </Form>
-              </ModalBody>
-              <ModalFooter>
+              )}
+              <Form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="grid w-full gap-4"
+              >
+                <Controller
+                  control={form.control}
+                  name="name"
+                  render={({ field, fieldState }) => (
+                    <Input
+                      variant="bordered"
+                      placeholder={
+                        type === 'discipline' ? 'Ex: Matemática' : 'Ex: Álgebra'
+                      }
+                      autoFocus
+                      // label={type === 'discipline' ? 'Disciplina' : 'Tema'}
+                      // labelPlacement="outside"
+                      radius="full"
+                      isRequired
+                      classNames={{
+                        inputWrapper: 'w-full',
+                      }}
+                      // errorMessage={}
+                    />
+                  )}
+                />
+
                 <Button
                   type="submit"
-                  className="w-auto lg:flex-1"
+                  className="w-auto text-foreground lg:flex-1"
+                  radius="full"
+                  variant="bordered"
+                  color="primary"
                   aria-label={
                     type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
                   }
                 >
                   Salvar
                 </Button>
-              </ModalFooter>
+              </Form>
             </>
           )}
-        </ModalContent>
-      </Modal>
+        </PopoverContent>
+      </Popover>
     </>
   )
 }
