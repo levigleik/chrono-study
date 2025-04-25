@@ -27,10 +27,11 @@ export function HighlightCard(props: HighlightCardProps) {
         variant="bordered"
         classNames={{
           base: 'items-center',
-          iconWrapper: 'w-14 h-14 border-secondary-500 bg-background border-1',
+          iconWrapper: 'shadow-none bg-background',
+          alertIcon: 'w-[unset] h-[unset]',
         }}
         icon={props.icon}
-        radius="full"
+        // radius="full"
       />
     </>
   )

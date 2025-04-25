@@ -8,10 +8,22 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { useTimerStore } from '@/store/timerStore'
-import { Button, Tooltip, addToast } from '@heroui/react'
+import {
+  Alert,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  addToast,
+} from '@heroui/react'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
+import { IoBook, IoBookmark } from 'react-icons/io5'
+import { HighlightCard } from './HighlightCard'
+import { FaClock, FaExclamation } from 'react-icons/fa'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
@@ -159,22 +171,48 @@ export function Timer() {
         </Button>
       </div>
 
-      <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Salvar tempo</DialogTitle>
-            <DialogDescription>
-              Tem certeza de que deseja salvar esta sessão de estudo?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="bordered" onPress={() => setShowSaveDialog(false)}>
+      <Modal isOpen={showSaveDialog} onOpenChange={setShowSaveDialog}>
+        <ModalContent>
+          <ModalHeader>Confirmar registro</ModalHeader>
+          <ModalBody>
+            <HighlightCard
+              title="Disciplina"
+              subtitle={selectedDiscipline || ''}
+              icon={<IoBook size={30} className="text-white" />}
+            />
+            <HighlightCard
+              title="Tema"
+              subtitle={selectedSubject || ''}
+              icon={<IoBookmark size={30} className="text-white" />}
+            />
+            <HighlightCard
+              title="Tempo de estudo"
+              subtitle={formatTime(seconds)}
+              icon={<FaClock size={30} className="text-white" />}
+            />
+            <Alert
+              color="primary"
+              title="Deseja salvar esta sessão de estudo? Os dados serão adicionados às suas estatísticas."
+              classNames={{
+                base: 'items-center',
+                iconWrapper: 'shadow-none bg-primary-50 border-none',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="bordered"
+              onPress={() => setShowSaveDialog(false)}
+              color="danger"
+            >
               Cancelar
             </Button>
-            <Button onPress={handleSave}>Salvar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <Button onPress={handleSave} color="secondary">
+              Salvar
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
         <DialogContent>
