@@ -83,7 +83,7 @@ export function AddDisciplineSubject({
   return (
     <Popover
       placement="bottom-end"
-      showArrow
+      // showArrow
       classNames={{
         content: 'bg-card border',
       }}

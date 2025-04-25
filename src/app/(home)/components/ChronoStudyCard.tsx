@@ -55,7 +55,7 @@ export function ChronoStudyCard() {
   }
   return (
     <div className="flex grow flex-col">
-      <div className="mb-4 flex items-baseline justify-between">
+      <div className="mb-4 flex items-end justify-between">
         <div className="items flex w-full justify-between space-x-2">
           <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
             Chrono Study
@@ -67,33 +67,25 @@ export function ChronoStudyCard() {
         <CardBody>
           <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex flex-1 flex-col gap-4">
-              <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="flex items-end justify-center gap-2">
                 <Select
-                  label={
-                    <div className="mb-2 flex w-full items-center justify-between text-medium">
-                      Disciplina
-                      <AddDisciplineSubject
-                        open={showDisciplines}
-                        onOpenChange={setShowDisciplines}
-                        type="discipline"
-                        onSubmit={async (values) =>
-                          handleSubmit(values, 'discipline')
-                        }
-                      />
-                    </div>
-                  }
+                  label="Disciplina"
                   classNames={{
-                    label: 'w-full p-0',
+                    label: 'w-full text-medium',
                     popoverContent: 'bg-card border',
-                    value: 'text-medium',
+                    value: 'text-sm',
                   }}
                   radius="full"
                   placeholder="Selecione uma"
                   variant="bordered"
+                  size="sm"
                   selectedKeys={[selectedDiscipline ?? '']}
                   labelPlacement={'outside'}
                   isDisabled={isRunning}
                   items={disciplinesData ?? []}
+                  // renderValue={(item) => (
+                  //   <span className="text-medium">{item.name}</span>
+                  // )}
                   onChange={(e) => setDiscipline(e.target?.value)}
                 >
                   {(item) => (
@@ -106,28 +98,27 @@ export function ChronoStudyCard() {
                     </SelectItem>
                   )}
                 </Select>
+                <AddDisciplineSubject
+                  open={showDisciplines}
+                  onOpenChange={setShowDisciplines}
+                  type="discipline"
+                  onSubmit={async (values) =>
+                    handleSubmit(values, 'discipline')
+                  }
+                />
               </div>
             </div>
 
             <div className="flex flex-1 flex-col gap-4">
-              <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="flex items-end justify-center gap-2">
                 <Select
-                  label={
-                    <div className="mb-2 flex w-full items-center justify-between text-medium">
-                      Tema
-                      <AddDisciplineSubject
-                        open={showSubjects}
-                        onOpenChange={setShowSubjects}
-                        type="subject"
-                        onSubmit={(values) => handleSubmit(values, 'subject')}
-                        disabled={!selectedDiscipline}
-                      />
-                    </div>
-                  }
+                  label="Tema"
+                  size="sm"
                   isDisabled={!selectedDiscipline || isRunning}
                   classNames={{
-                    label: 'w-full p-0',
-                    value: 'text-medium',
+                    label: 'w-full text-medium',
+                    popoverContent: 'bg-card border',
+                    value: 'text-sm',
                   }}
                   radius="full"
                   placeholder="Selecione um"
@@ -147,6 +138,13 @@ export function ChronoStudyCard() {
                     </SelectItem>
                   )}
                 </Select>
+                <AddDisciplineSubject
+                  open={showSubjects}
+                  onOpenChange={setShowSubjects}
+                  type="subject"
+                  onSubmit={(values) => handleSubmit(values, 'subject')}
+                  disabled={!selectedDiscipline}
+                />
               </div>
             </div>
           </div>
