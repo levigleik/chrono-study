@@ -8,11 +8,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { useTimerStore } from '@/store/timerStore'
-import { Button } from '@heroui/react'
+import { Button, Tooltip, addToast } from '@heroui/react'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
@@ -44,7 +43,11 @@ export function Timer() {
   const handleSave = useCallback(() => {
     saveSession()
     setShowSaveDialog(false)
-    toast.success('Tempo salvo com sucesso!')
+    addToast({
+      title: 'Tempo salvo',
+      description: 'O tempo foi salvo com sucesso',
+      color: 'success',
+    })
   }, [saveSession])
 
   useEffect(() => {
@@ -73,6 +76,17 @@ export function Timer() {
     return () => window.removeEventListener('storage', handleStorageChange)
   }, [syncTimer])
 
+  const handleStartTimer = () => {
+    if (!selectedSubject || !selectedDiscipline) {
+      addToast({
+        title: 'Selecione uma matéria e uma disciplina',
+        color: 'danger',
+      })
+      return
+    }
+    startTimer()
+  }
+
   return (
     <>
       <div className="flex flex-col text-center">
@@ -83,9 +97,8 @@ export function Timer() {
       <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
         {!isRunning ? (
           <Button
-            onPress={startTimer}
+            onPress={handleStartTimer}
             variant="bordered"
-            isDisabled={!selectedSubject || !selectedDiscipline}
             size="lg"
             type="button"
             radius="full"

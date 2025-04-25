@@ -5,9 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { useEffect, useState } from 'react'
 
 import { ThemeProvider } from '@/components/providers/theme-provider'
-import { Button } from '@/components/ui/button'
-import { Toaster } from '@/components/ui/sonner'
-import { TooltipProvider } from '@/components/ui/tooltip'
+import { Button, ToastProvider } from '@heroui/react'
 import { HeroUIProvider } from '@heroui/system'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -29,7 +27,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <h1 className="font-bold text-2xl">Ocorreu um erro</h1>
           <Button
             className="mt-4"
-            onClick={() => {
+            variant="bordered"
+            radius="full"
+            onPress={() => {
               resetErrorBoundary()
             }}
           >
@@ -40,14 +40,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
     >
       <HeroUIProvider>
         <ThemeProvider attribute="class" defaultTheme="white">
-          <TooltipProvider>
-            <Toaster
-              position="top-center"
-              richColors
-              toastOptions={{ duration: 4000 }}
-            />
-            {children}
-          </TooltipProvider>
+          <ToastProvider
+            placement="top-center"
+            toastOffset={60}
+            toastProps={{
+              timeout: 3000,
+              radius: 'full',
+              classNames: {
+                title: 'text-foreground',
+              },
+            }}
+          />
+          {children}
         </ThemeProvider>
       </HeroUIProvider>
     </ErrorBoundary>
