@@ -1,13 +1,16 @@
 'use client'
 import Theme from '@/app/(home)/components/Theme'
-import { Card, CardContent } from '@/components/ui/card'
 
 import { useDisciplineStore } from '@/store/disciplineStore'
 import { useTimerStore } from '@/store/timerStore'
-import { Select, SelectItem } from '@heroui/react'
+import { Card, CardBody, Select, SelectItem } from '@heroui/react'
 import { useState } from 'react'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
+
+/**
+ * Componente que exibe o card do Chrono Study.
+ */
 
 export function ChronoStudyCard() {
   const {
@@ -51,17 +54,17 @@ export function ChronoStudyCard() {
     }
   }
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex grow flex-col">
       <div className="mb-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="font-bold text-2xl text-secondary-500">
+          <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
             Chrono Study
           </h1>
         </div>
         <Theme className="flex lg:hidden" />
       </div>
-      <Card className="flex justify-center">
-        <CardContent className="flex min-h-[300px] flex-col justify-between">
+      <Card className="flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 transition-shadow hover:shadow-large">
+        <CardBody>
           <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex flex-1 flex-col gap-4">
               <div className="mt-4 flex items-center justify-center gap-2">
@@ -81,6 +84,7 @@ export function ChronoStudyCard() {
                   }
                   classNames={{
                     label: 'w-full p-0',
+                    popoverContent: 'bg-card border',
                     value: 'text-medium',
                   }}
                   radius="full"
@@ -98,9 +102,7 @@ export function ChronoStudyCard() {
                       className="capitalize"
                       textValue={item.name}
                     >
-                      <div className="flex flex-col gap-2">
-                        <span className="font-bold">{item.name}</span>
-                      </div>
+                      {item.name}
                     </SelectItem>
                   )}
                 </Select>
@@ -141,9 +143,7 @@ export function ChronoStudyCard() {
                       className="capitalize"
                       textValue={item.name}
                     >
-                      <div className="flex flex-col gap-2">
-                        <span className="font-bold">{item.name}</span>
-                      </div>
+                      {item.name}
                     </SelectItem>
                   )}
                 </Select>
@@ -151,7 +151,7 @@ export function ChronoStudyCard() {
             </div>
           </div>
           <Timer />
-        </CardContent>
+        </CardBody>
       </Card>
     </div>
   )

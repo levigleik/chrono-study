@@ -1,5 +1,4 @@
 'use client'
-import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -14,12 +13,21 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useTimerStore } from '@/store/timerStore'
-import { Button } from '@heroui/react'
+import { Button, Card, CardBody } from '@heroui/react'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { HistoryItem } from './HistoryItem'
 
+/**
+ * Renderiza um componente de histórico de estudos, com um header e
+ * uma lista de componentes {@link HistoryItem} que representam as
+ * sess es de estudo realizadas.
+ *
+ * Tem um bot o de excluir histórico, que, quando clicado, abre um
+ * di logo de confirma o. Se confirmado, o histórico   limpo com
+ * sucesso e uma mensagem de sucesso   exibida.
+ */
 export function HistoryCard() {
   const { sessions, clearSessions } = useTimerStore((state) => state)
   const dataSessionsSorted = sessions.sort((a, b) => b.timestamp - a.timestamp)
@@ -30,7 +38,9 @@ export function HistoryCard() {
     <div className="flex grow flex-col">
       <div className="my-4 flex items-baseline justify-between">
         <div className="items flex w-full justify-between space-x-2">
-          <h1 className="font-bold text-2xl text-secondary-500">Histórico</h1>
+          <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
+            Histórico
+          </h1>
         </div>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -50,8 +60,8 @@ export function HistoryCard() {
           <TooltipContent side="bottom">Excluir histórico</TooltipContent>
         </Tooltip>
       </div>
-      <Card className="flex h-full max-h-[350px] w-full grow overflow-auto py-6">
-        <CardContent className="overflow-auto px-6">
+      <Card className="flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 transition-shadow hover:shadow-large">
+        <CardBody>
           {dataSessionsSorted.map((session) => (
             <HistoryItem key={session.timestamp} {...session} />
           ))}
@@ -62,7 +72,7 @@ export function HistoryCard() {
               </p>
             </div>
           )}
-        </CardContent>
+        </CardBody>
       </Card>
       <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
         <DialogContent>

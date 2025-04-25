@@ -1,7 +1,6 @@
 'use client'
-import { Card, CardContent } from '@/components/ui/card'
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
@@ -11,7 +10,7 @@ import {
 
 import { LabelList, Pie, PieChart } from 'recharts'
 
-import { flexRender, type Table } from '@tanstack/react-table'
+import { type Table, flexRender } from '@tanstack/react-table'
 
 import {
   TableBody,
@@ -21,6 +20,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Card, CardBody } from '@heroui/react'
+import { IoBook, IoBookmark } from 'react-icons/io5'
 import { columns } from '../utils'
 
 interface StatisticsCardProps {
@@ -33,19 +34,29 @@ interface StatisticsCardProps {
   table?: Table<{ name: string; duration: number }>
 }
 
+/**
+ * Componente que exibe o card de estatísticas.
+ *
+ * @param chartData - Dados do gráfico.
+ * @param chartConfig - Configuração do gráfico.
+ * @param table - Tabela de dados.
+ */
 export function StatisticsCard({
   chartData,
   chartConfig,
   table,
 }: StatisticsCardProps) {
   return (
-    <Card className="flex h-full items-center">
-      <CardContent className="w-full overflow-auto px-4">
-        <h3 className="mb-8 text-lg font-bold">Disciplinas mais estudadas</h3>
+    <Card className="flex h-full items-center border bg-card p-6 transition-shadow hover:shadow-large">
+      <CardBody>
+        <div className="mb-8 flex items-center gap-4">
+          <IoBook size={24} className="text-secondary-500" />
+          <h3 className="font-semibold ">Disciplinas mais estudadas</h3>
+        </div>
         {chartData && chartData?.length > 0 && (
           <ChartContainer
             config={chartConfig}
-            className="[&_.recharts-text]:fill-background mx-auto mb-8 aspect-square max-h-[240px] w-full"
+            className="mx-auto mb-8 aspect-square max-h-[240px] w-full [&_.recharts-text]:fill-background"
           >
             <PieChart>
               <ChartTooltip
@@ -93,11 +104,13 @@ export function StatisticsCard({
         )}
         {chartData?.length === 0 && (
           <div className="flex h-24 items-center justify-center">
-            <p className="text-sm text-gray-300">Nenhum histórico encontrado</p>
+            <p className="text-gray-300 text-sm">Nenhum histórico encontrado</p>
           </div>
         )}
-
-        <h3 className="my-8 text-lg font-bold">Temas mais estudados</h3>
+        <div className="mb-8 flex items-center gap-4">
+          <IoBookmark size={24} className="text-secondary-500" />
+          <h3 className="font-semibold">Temas mais estudados</h3>
+        </div>
         <TableComponent>
           <TableHeader>
             {table?.getHeaderGroups().map((headerGroup) => (
@@ -138,7 +151,7 @@ export function StatisticsCard({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-sm text-gray-300"
+                  className="h-24 text-center text-gray-300 text-sm"
                 >
                   Nenhum histórico encontrado
                 </TableCell>
@@ -146,7 +159,7 @@ export function StatisticsCard({
             )}
           </TableBody>
         </TableComponent>
-      </CardContent>
+      </CardBody>
     </Card>
   )
 }

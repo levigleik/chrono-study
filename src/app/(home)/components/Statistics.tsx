@@ -1,9 +1,9 @@
 'use client'
 
-import { type ChartConfig } from '@/components/ui/chart'
+import type { ChartConfig } from '@/components/ui/chart'
 
 import {
-  SortingState,
+  type SortingState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -17,6 +17,9 @@ import { useMemo, useState } from 'react'
 import { calculateTopStudied, columns } from '../utils'
 import { StatisticsCard } from './StatisticsCard'
 
+/**
+ * Componente que exibe o card de estatísticas.
+ */
 export function Statistics() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -65,7 +68,9 @@ export function Statistics() {
   return (
     <div className="flex h-full flex-col">
       <div className="mb-4 flex justify-between">
-        <h1 className="text-2xl font-bold">Estatísticas</h1>
+        <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
+          Estatísticas
+        </h1>
         <Theme className="hidden lg:flex" />
       </div>
       <StatisticsCard
