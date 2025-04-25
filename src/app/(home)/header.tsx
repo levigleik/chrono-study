@@ -15,21 +15,21 @@ export default function Header() {
     <Navbar
       classNames={{
         wrapper: 'max-w-7xl px-2 py-6 sm:px-6 md:px-8',
-        base: 'bg-secondary',
+        base: 'bg-card',
       }}
       position="static"
     >
-      <NavbarBrand className="font-bold text-2xl text-white">
+      <NavbarBrand className="font-bold text-2xl text-foreground">
         Chrono Study
       </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarItem className="text-white">
-          <Theme className="text-white" />
+        <NavbarItem className="text-foreground">
+          <Theme className="text-foreground" />
         </NavbarItem>
-        <NavbarItem className="text-white">
+        <NavbarItem className="text-foreground">
           <Button
             href="https://github.com/levigleik/chrono-study"
-            className="text-white text-medium"
+            className="text-foreground text-medium"
             as={Link}
             variant="bordered"
             radius="full"
