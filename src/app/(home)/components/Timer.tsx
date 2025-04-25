@@ -76,7 +76,7 @@ export function Timer() {
   return (
     <>
       <div className="flex flex-col text-center">
-        <span className="my-2 mt-4 font-clockicons text-5xl text-secondary-500 md:text-6xl lg:text-8xl dark:text-white">
+        <span className="my-2 mt-4 font-clockicons text-4xl text-secondary-500 md:text-5xl lg:text-7xl dark:text-white">
           {formatTime(seconds)}
         </span>
       </div>
