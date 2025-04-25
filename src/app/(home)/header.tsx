@@ -27,17 +27,19 @@ export default function Header() {
           <Theme className="text-white" />
         </NavbarItem>
         <NavbarItem className="text-white">
-          <Link
-            href="#"
-            className="text-white"
-            as={Button}
+          <Button
+            href="https://github.com/levigleik/chrono-study"
+            className="text-white text-medium"
+            as={Link}
             variant="bordered"
             radius="full"
             size="sm"
+            isExternal
+            aria-label="Github"
           >
             <FaGithub className="mr-2" />
             Github
-          </Link>
+          </Button>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
