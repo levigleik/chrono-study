@@ -60,7 +60,7 @@ export function HistoryCard() {
           <TooltipContent side="bottom">Excluir histórico</TooltipContent>
         </Tooltip>
       </div>
-      <Card className="flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 transition-shadow hover:shadow-large">
+      <Card className="!transition-shadow flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 hover:shadow-large">
         <CardBody>
           {dataSessionsSorted.map((session) => (
             <HistoryItem key={session.timestamp} {...session} />

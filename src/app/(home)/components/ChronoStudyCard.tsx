@@ -63,7 +63,7 @@ export function ChronoStudyCard() {
         </div>
         <Theme className="flex lg:hidden" />
       </div>
-      <Card className="flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 transition-shadow hover:shadow-large">
+      <Card className="!transition-shadow flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 duration-300 ease-in-out hover:shadow-large">
         <CardBody>
           <div className="flex flex-col gap-4 lg:flex-row">
             <div className="flex flex-1 flex-col gap-4">

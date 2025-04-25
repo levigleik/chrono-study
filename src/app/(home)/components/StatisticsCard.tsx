@@ -47,7 +47,7 @@ export function StatisticsCard({
   table,
 }: StatisticsCardProps) {
   return (
-    <Card className="flex h-full items-center border bg-card p-6 transition-shadow hover:shadow-large">
+    <Card className="!transition-shadow flex h-full items-center border bg-card p-6 hover:shadow-large">
       <CardBody>
         <div className="mb-8 flex items-center gap-4">
           <IoBook size={24} className="text-secondary-500" />
