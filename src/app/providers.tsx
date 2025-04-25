@@ -1,55 +1,55 @@
-"use client";
+'use client'
 
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from 'react-error-boundary'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Button } from "@/components/ui/button";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { HeroUIProvider } from "@heroui/system";
+import { ThemeProvider } from '@/components/providers/theme-provider'
+import { Button } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/sonner'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { HeroUIProvider } from '@heroui/system'
 
 export function Providers({ children }: { children: React.ReactNode }) {
-	const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false)
 
-	useEffect(() => {
-		setIsClient(typeof window !== "undefined");
-	}, []);
+  useEffect(() => {
+    setIsClient(typeof window !== 'undefined')
+  }, [])
 
-	if (!isClient) {
-		return null;
-	}
+  if (!isClient) {
+    return null
+  }
 
-	return (
-		<ErrorBoundary
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			fallbackRender={({ resetErrorBoundary }: any) => (
-				<div className="flex h-screen flex-col items-center justify-center">
-					<h1 className="text-2xl font-bold">Ocorreu um erro</h1>
-					<Button
-						className="mt-4"
-						onClick={() => {
-							resetErrorBoundary();
-						}}
-					>
-						Tentar novamente
-					</Button>
-				</div>
-			)}
-		>
-			<HeroUIProvider>
-				<ThemeProvider attribute="class" defaultTheme="dark">
-					<TooltipProvider>
-						<Toaster
-							position="top-center"
-							richColors
-							toastOptions={{ duration: 4000 }}
-						/>
-						{children}
-					</TooltipProvider>
-				</ThemeProvider>
-			</HeroUIProvider>
-		</ErrorBoundary>
-	);
+  return (
+    <ErrorBoundary
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      fallbackRender={({ resetErrorBoundary }: any) => (
+        <div className="flex h-screen flex-col items-center justify-center">
+          <h1 className="font-bold text-2xl">Ocorreu um erro</h1>
+          <Button
+            className="mt-4"
+            onClick={() => {
+              resetErrorBoundary()
+            }}
+          >
+            Tentar novamente
+          </Button>
+        </div>
+      )}
+    >
+      <HeroUIProvider>
+        <ThemeProvider attribute="class" defaultTheme="white">
+          <TooltipProvider>
+            <Toaster
+              position="top-center"
+              richColors
+              toastOptions={{ duration: 4000 }}
+            />
+            {children}
+          </TooltipProvider>
+        </ThemeProvider>
+      </HeroUIProvider>
+    </ErrorBoundary>
+  )
 }

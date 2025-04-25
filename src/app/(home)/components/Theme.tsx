@@ -9,7 +9,6 @@ export default function Theme({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme()
   return (
     <Tooltip
-      showArrow
       content={
         theme === 'dark' ? 'Trocar para tema claro' : 'Trocar para tema escuro'
       }

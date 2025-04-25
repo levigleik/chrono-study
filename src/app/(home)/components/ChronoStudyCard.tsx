@@ -55,14 +55,6 @@ export function ChronoStudyCard() {
   }
   return (
     <div className="flex grow flex-col">
-      <div className="mb-4 flex items-end justify-between">
-        <div className="items flex w-full justify-between space-x-2">
-          <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
-            Chrono Study
-          </h1>
-        </div>
-        <Theme className="flex lg:hidden" />
-      </div>
       <Card className="!transition-shadow flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 duration-300 ease-in-out hover:shadow-large">
         <CardBody>
           <div className="flex flex-col gap-4 lg:flex-row">

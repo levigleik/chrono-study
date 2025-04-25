@@ -14,7 +14,7 @@ export function HistoryItem(data: StudySession) {
         <div
           className={cn(
             'flex min-w-[130px] items-center justify-center place-self-center rounded-full',
-            'border-2 border-secondary-500 px-4 py-3 font-semibold text-secondary-500 dark:text-foreground',
+            'border-2 border-secondary-500 px-4 py-3 text-secondary-500 dark:text-foreground',
           )}
         >
           {Math.floor(data.duration / 3600) > 0
@@ -22,12 +22,12 @@ export function HistoryItem(data: StudySession) {
             : `${Math.floor(data.duration / 60)}min ${data.duration % 60}s`}
         </div>
         <div className="flex flex-col">
-          <p className="font-semibold">{data.discipline}</p>
+          <p>{data.discipline}</p>
           <p className="text-foreground-500 text-sm">{data.subject}</p>
         </div>
       </div>
       <div className="hidden flex-col justify-between text-right sm:flex">
-        <p className="">{dateFormatted}</p>
+        <p>{dateFormatted}</p>
         <p className="text-foreground-500 text-sm">
           às {new Date(data.timestamp).toLocaleTimeString('pt-BR')}
         </p>

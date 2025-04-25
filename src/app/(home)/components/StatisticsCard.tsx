@@ -10,19 +10,12 @@ import {
 
 import { LabelList, Pie, PieChart } from 'recharts'
 
-import { type Table, flexRender } from '@tanstack/react-table'
-
-import {
-  TableBody,
-  TableCell,
-  Table as TableComponent,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { Card, CardBody } from '@heroui/react'
+import Table from '@/components/table'
+import type { SubjectTable } from '@/types'
+import { Card, CardBody, CardHeader } from '@heroui/react'
 import { IoBook, IoBookmark } from 'react-icons/io5'
 import { columns } from '../utils'
+import Theme from './Theme'
 
 interface StatisticsCardProps {
   chartData?: {
@@ -31,7 +24,7 @@ interface StatisticsCardProps {
     fill: string
   }[]
   chartConfig: ChartConfig
-  table?: Table<{ name: string; duration: number }>
+  tableData?: SubjectTable[]
 }
 
 /**
@@ -42,12 +35,18 @@ interface StatisticsCardProps {
  * @param table - Tabela de dados.
  */
 export function StatisticsCard({
+  tableData,
   chartData,
   chartConfig,
-  table,
 }: StatisticsCardProps) {
   return (
     <Card className="!transition-shadow flex h-full items-center border bg-card p-6 hover:shadow-large">
+      {/* <CardHeader className="justify-between">
+        <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
+          Estatísticas
+        </h1>
+        <Theme className="hidden lg:flex" />
+      </CardHeader> */}
       <CardBody>
         <div className="mb-8 flex items-center gap-4">
           <IoBook size={24} className="text-secondary-500" />
@@ -111,54 +110,14 @@ export function StatisticsCard({
           <IoBookmark size={24} className="text-secondary-500" />
           <h3 className="font-semibold">Temas mais estudados</h3>
         </div>
-        <TableComponent>
-          <TableHeader>
-            {table?.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table?.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center text-gray-300 text-sm"
-                >
-                  Nenhum histórico encontrado
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </TableComponent>
+        <Table
+          data={tableData}
+          columns={columns}
+          showColumnsFilter={false}
+          showPagination={false}
+          loading={false}
+          itemKey="name"
+        />
       </CardBody>
     </Card>
   )

@@ -94,7 +94,7 @@ export function AddDisciplineSubject({
           radius="full"
           isIconOnly
           size="sm"
-          disabled={isRunning || disabled}
+          isDisabled={isRunning || disabled}
           variant="bordered"
           aria-label={`Adicionar ${
             type === 'discipline' ? 'disciplina' : 'tema'

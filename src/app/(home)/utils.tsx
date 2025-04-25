@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { StudySession, SubjectTable } from '@/types'
-import { ColumnDef } from '@tanstack/react-table'
+import type { StudySession, SubjectTable } from '@/types'
 import { ArrowUpDown } from 'lucide-react'
 
 export const calculateTopStudied = (
@@ -20,28 +19,19 @@ export const calculateTopStudied = (
     .slice(0, 5)
 }
 
-export const columns: ColumnDef<SubjectTable>[] = [
+import type { ColumnProps } from '@/components/table/types'
+
+export const columns: ColumnProps<SubjectTable>[] = [
   {
-    accessorKey: 'name',
-    header: () => <span className="font-bold">Disciplina</span>,
-    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
+    uid: 'name',
+    label: 'Nome',
   },
   {
-    accessorKey: 'duration',
-    header: ({ column }) => (
-      <div className="text-right">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className="font-bold"
-        >
-          Tempo
-          <ArrowUpDown />
-        </Button>
-      </div>
-    ),
-    cell: ({ row }) => {
-      const seconds = parseFloat(row.getValue('duration'))
+    uid: 'duration',
+    label: 'Tempo',
+    sortable: true,
+    renderCell(item) {
+      const seconds = Number(item.duration)
       const formatted = `${
         Math.floor(seconds / 3600) > 0
           ? `${Math.floor(seconds / 3600)}h ${Math.floor((seconds % 3600) / 60)}min`
