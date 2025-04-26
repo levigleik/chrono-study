@@ -127,7 +127,7 @@ export function Timer() {
         )}
         <Button
           onPress={
-            seconds === 0
+            seconds === 0 && !isRunning
               ? () => {
                   resetTimer()
                 }

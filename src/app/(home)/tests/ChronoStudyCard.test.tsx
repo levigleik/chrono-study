@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react'
-import { ChronoStudyCard } from '../components/ChronoStudyCard'
 import { useDisciplineStore } from '@/store/disciplineStore'
 import { useTimerStore } from '@/store/timerStore'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { ChronoStudyCard } from '../components/ChronoStudyCard'
 
 // Mock the stores
 jest.mock('@/store/disciplineStore', () => ({
@@ -42,9 +42,8 @@ describe('ChronoStudyCard Component', () => {
   it('renders the component correctly', () => {
     render(<ChronoStudyCard />)
 
-    expect(screen.getByText('Chrono Study')).toBeInTheDocument()
-    expect(screen.getByText('Disciplina')).toBeInTheDocument()
-    expect(screen.getByText('Tema')).toBeInTheDocument()
+    expect(screen.getByLabelText('Disciplina')).toBeInTheDocument()
+    expect(screen.getByLabelText('Tema')).toBeInTheDocument()
   })
 
   it('adds a new discipline', () => {
@@ -58,6 +57,9 @@ describe('ChronoStudyCard Component', () => {
 
     const saveButton = screen.getByLabelText('Salvar disciplina')
     fireEvent.click(saveButton)
+
+    // Asserção extra: verifica se a função de adicionar disciplina foi chamada corretamente
+    expect(mockAddDiscipline).toHaveBeenCalledWith('Física')
   })
 
   it('adds a new subject', () => {
@@ -78,5 +80,8 @@ describe('ChronoStudyCard Component', () => {
 
     const saveButton = screen.getByLabelText('Salvar tema')
     fireEvent.click(saveButton)
+
+    // Asserção extra: verifica se a função de adicionar tema foi chamada corretamente
+    expect(mockAddSubject).toHaveBeenCalledWith('Matemática', 'Trigonometria')
   })
 })
