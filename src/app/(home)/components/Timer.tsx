@@ -1,12 +1,4 @@
 'use client'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { useTimerStore } from '@/store/timerStore'
 import {
   Alert,

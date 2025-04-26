@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button'
 import type { StudySession, SubjectTable } from '@/types'
-import { ArrowUpDown } from 'lucide-react'
 
 export const calculateTopStudied = (
   sessions: StudySession[],
