@@ -4,8 +4,8 @@ import { Statistics } from './components/Statistics'
 
 export default function Home() {
   return (
-    <div className="m-auto flex max-w-7xl flex-col gap-8 px-2 py-6 sm:px-6 md:px-8 lg:flex-row">
-      <div className="flex w-full flex-col lg:w-2/3">
+    <div className="m-auto flex max-w-[1440px] flex-col gap-8 px-2 py-6 sm:px-6 md:px-8 lg:flex-row">
+      <div className="flex w-full flex-col gap-8 lg:w-2/3">
         <ChronoStudyCard />
         <HistoryCard />
       </div>

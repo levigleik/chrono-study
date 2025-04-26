@@ -1,21 +1,20 @@
 'use client'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+
 import { useTimerStore } from '@/store/timerStore'
+import {
+  Alert,
+  CardHeader,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Tooltip,
+} from '@heroui/react'
 import { Button, Card, CardBody } from '@heroui/react'
 import { TrashIcon } from 'lucide-react'
 import { useState } from 'react'
+import { FaExclamation, FaHistory } from 'react-icons/fa'
 import { toast } from 'sonner'
 import { HistoryItem } from './HistoryItem'
 
@@ -35,57 +34,63 @@ export function HistoryCard() {
   const [showClearDialog, setShowClearDialog] = useState(false)
 
   return (
-    <div className="flex grow flex-col">
-      <div className="my-4 flex items-baseline justify-between">
-        <div className="items flex w-full justify-between space-x-2">
+    <>
+      <Card className="!transition-shadow flex max-h-[350px] min-h-[300px] w-full grow overflow-auto border bg-card p-6 hover:shadow-large">
+        <CardHeader className="flex items-baseline justify-between">
           <h1 className="font-bold text-2xl text-secondary-500 dark:text-foreground">
             Histórico
           </h1>
-        </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
+          <Tooltip content="Excluir histórico" placement="bottom-end">
             <Button
               onPress={() => setShowClearDialog(true)}
               radius="full"
               color="danger"
               isIconOnly
-              disabled={sessions.length === 0}
+              isDisabled={sessions.length === 0}
               variant="bordered"
               size="sm"
               aria-label="Excluir histórico"
             >
               {<TrashIcon size={16} />}
             </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">Excluir histórico</TooltipContent>
-        </Tooltip>
-      </div>
-      <Card className="!transition-shadow flex h-full max-h-[350px] w-full grow overflow-auto border bg-card p-6 hover:shadow-large">
+          </Tooltip>
+        </CardHeader>
         <CardBody>
           {dataSessionsSorted.map((session) => (
             <HistoryItem key={session.timestamp} {...session} />
           ))}
           {dataSessionsSorted.length === 0 && (
-            <div className="flex h-full w-full items-center justify-center">
-              <p className="text-gray-300 text-sm">
-                Nenhum histórico encontrado
-              </p>
+            <div className="flex h-full w-full flex-col items-center justify-center text-center">
+              <FaHistory size={60} className="text-secondary-500" />
+              <span className="mt-2 font-semibold text-gray-600 text-lg">
+                Nenhum histórico encontrado.
+              </span>
+              <span className="text-base text-gray-400">
+                Registre seu tempo de estudo para ver o histórico.
+              </span>
             </div>
           )}
         </CardBody>
       </Card>
-      <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Limpar histórico</DialogTitle>
-            <DialogDescription>
-              Tem certeza de que deseja limpar todo o histórico?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+      <Modal isOpen={showClearDialog} onOpenChange={setShowClearDialog}>
+        <ModalContent>
+          <ModalHeader>Limpar histórico</ModalHeader>
+          <ModalBody>
+            <Alert
+              color="danger"
+              title="Tem certeza de que deseja limpar todo o histórico?"
+              icon={<FaExclamation size={24} className="text-danger" />}
+              classNames={{
+                base: 'items-center',
+                iconWrapper: 'shadow-none bg-danger-50 border-none',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
             <Button
               variant="bordered"
               onPress={() => setShowClearDialog(false)}
+              color="danger"
             >
               Cancelar
             </Button>
@@ -95,13 +100,13 @@ export function HistoryCard() {
                 setShowClearDialog(false)
                 toast.success('Histórico deletado com sucesso')
               }}
-              variant="bordered"
+              color="secondary"
             >
               Confirmar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }

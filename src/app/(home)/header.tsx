@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <Navbar
       classNames={{
-        wrapper: 'max-w-7xl px-2 py-6 sm:px-6 md:px-8',
+        wrapper: 'max-w-[1440px] px-2 py-6 sm:px-6 md:px-8',
         base: 'bg-card',
       }}
       position="static"

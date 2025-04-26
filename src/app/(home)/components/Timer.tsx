@@ -21,9 +21,9 @@ import {
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
+import { FaClock, FaExclamation } from 'react-icons/fa'
 import { IoBook, IoBookmark } from 'react-icons/io5'
 import { HighlightCard } from './HighlightCard'
-import { FaClock, FaExclamation } from 'react-icons/fa'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
@@ -155,10 +155,7 @@ export function Timer() {
           Resetar
         </Button>
         <Button
-          onPress={() => {
-            pauseTimer()
-            setShowSaveDialog(true)
-          }}
+          onPress={() => setShowSaveDialog(true)}
           variant="bordered"
           size="lg"
           color="success"
@@ -214,18 +211,25 @@ export function Timer() {
         </ModalContent>
       </Modal>
 
-      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Resetar cronômetro</DialogTitle>
-            <DialogDescription>
-              Tem certeza de que deseja resetar o cronômetro?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+      <Modal isOpen={showResetDialog} onOpenChange={setShowResetDialog}>
+        <ModalContent>
+          <ModalHeader>Resetar cronômetro</ModalHeader>
+          <ModalBody>
+            <Alert
+              color="danger"
+              title="Tem certeza de que deseja resetar o cronômetro?"
+              icon={<FaExclamation size={24} className="text-danger" />}
+              classNames={{
+                base: 'items-center',
+                iconWrapper: 'shadow-none bg-danger-50 border-none',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
             <Button
               variant="bordered"
               onPress={() => setShowResetDialog(false)}
+              color="danger"
             >
               Cancelar
             </Button>
@@ -234,12 +238,13 @@ export function Timer() {
                 resetTimer()
                 setShowResetDialog(false)
               }}
+              color="secondary"
             >
               Confirmar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
