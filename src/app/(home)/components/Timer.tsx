@@ -94,11 +94,11 @@ export function Timer() {
   return (
     <>
       <div className="flex flex-col text-center">
-        <span className="my-2 mt-4 font-clockicons text-4xl text-secondary-500 md:text-5xl lg:text-7xl dark:text-white">
+        <span className="font-clockicons text-4xl text-secondary-500 md:text-5xl lg:text-7xl dark:text-white">
           {formatTime(seconds)}
         </span>
       </div>
-      <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
+      <div className="flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
         {!isRunning ? (
           <Button
             onPress={handleStartTimer}
