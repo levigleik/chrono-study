@@ -1,28 +1,32 @@
 'use client'
-import { Button } from '@/components/ui/button'
+// import {
+//   Form,
+//   FormControl,
+//   FormField,
+//   FormItem,
+//   FormLabel,
+//   FormMessage,
+// } from '@/components/ui/form'
+
+import { HighlightCard } from '@/app/(home)/components/HighlightCard'
+import { useTimerStore } from '@/store/timerStore'
 import {
+  Button,
   Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { useTimerStore } from '@/store/timerStore'
+} from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import { IoBook } from 'react-icons/io5'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -37,13 +41,24 @@ interface AddDisciplineSubjectProps {
   onOpenChange: (open: boolean) => void
   type: 'discipline' | 'subject'
   onSubmit: (values: z.infer<typeof formSchema>) => void
+  disabled?: boolean
 }
 
+/**
+ * Componente que exibe o modal de adicionar disciplina ou tema.
+ *
+ * @param open - Booleano que controla a visibilidade do modal.
+ * @param onOpenChange - Função que é chamada quando o estado de `open` muda.
+ * @param type - Tipo de disciplina ou tema.
+ * @param onSubmit - Função que é chamada quando o formulário é submetido.
+ * @param disabled - Booleano que controla se o botão de adicionar está desabilitado.
+ */
 export function AddDisciplineSubject({
   open,
   onOpenChange,
   type,
   onSubmit,
+  disabled,
 }: AddDisciplineSubjectProps) {
   const { isRunning } = useTimerStore()
 
@@ -66,59 +81,82 @@ export function AddDisciplineSubject({
   }
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <Tooltip>
-        <PopoverTrigger asChild>
-          <TooltipTrigger asChild>
-            <Button
-              onClick={() => onOpenChange(!open)}
-              className="h-8 w-8 rounded-full"
-              disabled={isRunning}
-              aria-label={`Adicionar ${
-                type === 'discipline' ? 'disciplina' : 'tema'
-              }`}
+    <Popover
+      placement="bottom-end"
+      // showArrow
+      classNames={{
+        content: 'bg-card border',
+      }}
+    >
+      <PopoverTrigger>
+        <Button
+          // onPress={() => onOpenChange(!open)}
+          radius="full"
+          isIconOnly
+          size="sm"
+          isDisabled={isRunning || disabled}
+          variant="bordered"
+          aria-label={`Adicionar ${
+            type === 'discipline' ? 'disciplina' : 'tema'
+          }`}
+        >
+          {<PlusIcon size={16} />}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-sm items-start gap-4 p-4">
+        {(titleProps) => (
+          <>
+            <div className="text-left font-semibold text-lg">
+              {type === 'discipline' ? 'Nova disciplina' : 'Novo tema'}
+            </div>
+            {type === 'subject' && (
+              <HighlightCard
+                title="Disicplina"
+                subtitle="Matemática"
+                icon={<IoBook size={36} className="text-white" />}
+              />
+            )}
+            <Form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="grid w-full gap-4"
             >
-              {<PlusIcon />}
-            </Button>
-          </TooltipTrigger>
-        </PopoverTrigger>
-        <TooltipContent side="bottom">
-          Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
-        </TooltipContent>
-      </Tooltip>
-      <PopoverContent className="">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="grid gap-4"
-            role="form"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="gap-4">
-                  <FormLabel>
-                    Adicionar {type === 'discipline' ? 'disciplina' : 'tema'}
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Digite o nome" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              className="w-auto lg:flex-1"
-              aria-label={
-                type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
-              }
-            >
-              Salvar
-            </Button>
-          </form>
-        </Form>
+              <Controller
+                control={form.control}
+                name="name"
+                render={({ field, fieldState }) => (
+                  <Input
+                    variant="bordered"
+                    placeholder={
+                      type === 'discipline' ? 'Ex: Matemática' : 'Ex: Álgebra'
+                    }
+                    autoFocus
+                    // label={type === 'discipline' ? 'Disciplina' : 'Tema'}
+                    // labelPlacement="outside"
+                    radius="full"
+                    isRequired
+                    classNames={{
+                      inputWrapper: 'w-full',
+                    }}
+                    // errorMessage={}
+                  />
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="w-auto text-foreground lg:flex-1"
+                radius="full"
+                variant="bordered"
+                color="primary"
+                aria-label={
+                  type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
+                }
+              >
+                Salvar
+              </Button>
+            </Form>
+          </>
+        )}
       </PopoverContent>
     </Popover>
   )

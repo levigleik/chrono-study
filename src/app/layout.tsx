@@ -1,11 +1,20 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import { fontCalistoga, fontMono, fontSans } from '@/config/fonts'
+import type { Metadata, Viewport } from 'next'
+import '../assets/styles/globals.css'
+import {
+  APP_DEFAULT_TITLE,
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_TITLE_TEMPLATE,
+} from '@/config/site'
 import { Providers } from './providers'
 
-const APP_NAME = 'Chrono Study'
-const APP_DEFAULT_TITLE = 'Chrono Study'
-const APP_TITLE_TEMPLATE = '%s - Chrono Study'
-const APP_DESCRIPTION = 'Uma ferramenta para estudantes'
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -49,7 +58,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt" translate="no">
-      <body className="antialiased">
+      <body
+        className={`${fontSans.variable} ${fontMono.variable} ${fontCalistoga.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,19 +1,21 @@
 'use client'
-
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { useTimerStore } from '@/store/timerStore'
+import {
+  Alert,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  addToast,
+} from '@heroui/react'
 
 import { PauseIcon, PlayIcon, RotateCcwIcon, SaveIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { FaClock, FaExclamation } from 'react-icons/fa'
+import { IoBook, IoBookmark } from 'react-icons/io5'
+import { HighlightCard } from './HighlightCard'
 
 export function Timer() {
   const [showSaveDialog, setShowSaveDialog] = useState(false)
@@ -45,7 +47,11 @@ export function Timer() {
   const handleSave = useCallback(() => {
     saveSession()
     setShowSaveDialog(false)
-    toast.success('Tempo salvo com sucesso!')
+    addToast({
+      title: 'Tempo salvo',
+      description: 'O tempo foi salvo com sucesso',
+      color: 'success',
+    })
   }, [saveSession])
 
   useEffect(() => {
@@ -74,30 +80,44 @@ export function Timer() {
     return () => window.removeEventListener('storage', handleStorageChange)
   }, [syncTimer])
 
+  const handleStartTimer = () => {
+    if (!selectedSubject || !selectedDiscipline) {
+      addToast({
+        title: 'Selecione uma matéria e uma disciplina',
+        color: 'danger',
+      })
+      return
+    }
+    startTimer()
+  }
+
   return (
     <>
       <div className="flex flex-col text-center">
-        <span className="font-clockicons my-2 mt-4 text-5xl md:text-6xl lg:text-8xl">
+        <span className="my-2 mt-4 font-clockicons text-4xl text-secondary-500 md:text-5xl lg:text-7xl dark:text-white">
           {formatTime(seconds)}
         </span>
       </div>
       <div className="mt-4 flex w-full flex-col gap-4 lg:flex-row lg:justify-between lg:space-y-0">
         {!isRunning ? (
           <Button
-            onClick={startTimer}
-            disabled={!selectedSubject || !selectedDiscipline}
+            onPress={handleStartTimer}
+            variant="bordered"
             size="lg"
             type="button"
-            className="w-auto lg:flex-1"
+            radius="full"
+            color="secondary"
+            className="w-auto text-foreground lg:flex-1"
           >
             <PlayIcon className="mr-2 h-4 w-4" />
             Iniciar
           </Button>
         ) : (
           <Button
-            onClick={pauseTimer}
-            variant="secondary"
+            onPress={pauseTimer}
+            variant="bordered"
             size="lg"
+            radius="full"
             type="button"
             className="w-auto lg:flex-1"
           >
@@ -106,7 +126,7 @@ export function Timer() {
           </Button>
         )}
         <Button
-          onClick={
+          onPress={
             seconds === 0
               ? () => {
                   resetTimer()
@@ -115,70 +135,108 @@ export function Timer() {
                   setShowResetDialog(true)
                 }
           }
-          variant="outline"
+          variant="bordered"
           size="lg"
-          className="w-auto lg:flex-1"
+          className="w-auto text-foreground lg:flex-1 dark:text-white"
           type="button"
-          disabled={seconds === 0 && !selectedSubject && !selectedDiscipline}
+          radius="full"
+          color="danger"
+          isDisabled={seconds === 0 && !selectedSubject && !selectedDiscipline}
         >
           <RotateCcwIcon className="mr-2 h-4 w-4" />
           Resetar
         </Button>
         <Button
-          onClick={() => {
-            pauseTimer()
-            setShowSaveDialog(true)
-          }}
-          variant="default"
+          onPress={() => setShowSaveDialog(true)}
+          variant="bordered"
           size="lg"
-          className="w-auto lg:flex-1"
-          disabled={seconds === 0}
+          color="success"
+          radius="full"
+          className="w-auto text-foreground lg:flex-1 dark:text-white"
+          isDisabled={seconds === 0}
         >
           <SaveIcon className="mr-2 h-4 w-4" />
           Salvar
         </Button>
       </div>
 
-      <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Salvar tempo</DialogTitle>
-            <DialogDescription>
-              Tem certeza de que deseja salvar esta sessão de estudo?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
+      <Modal isOpen={showSaveDialog} onOpenChange={setShowSaveDialog}>
+        <ModalContent>
+          <ModalHeader>Confirmar registro</ModalHeader>
+          <ModalBody>
+            <HighlightCard
+              title="Disciplina"
+              subtitle={selectedDiscipline || ''}
+              icon={<IoBook size={30} className="text-white" />}
+            />
+            <HighlightCard
+              title="Tema"
+              subtitle={selectedSubject || ''}
+              icon={<IoBookmark size={30} className="text-white" />}
+            />
+            <HighlightCard
+              title="Tempo de estudo"
+              subtitle={formatTime(seconds)}
+              icon={<FaClock size={30} className="text-white" />}
+            />
+            <Alert
+              color="primary"
+              title="Deseja salvar esta sessão de estudo? Os dados serão adicionados às suas estatísticas."
+              classNames={{
+                base: 'items-center',
+                iconWrapper: 'shadow-none bg-primary-50 border-none',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="bordered"
+              onPress={() => setShowSaveDialog(false)}
+              color="danger"
+            >
               Cancelar
             </Button>
-            <Button onClick={handleSave}>Salvar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <Button onPress={handleSave} color="secondary">
+              Salvar
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
-      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Resetar cronômetro</DialogTitle>
-            <DialogDescription>
-              Tem certeza de que deseja resetar o cronômetro?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
+      <Modal isOpen={showResetDialog} onOpenChange={setShowResetDialog}>
+        <ModalContent>
+          <ModalHeader>Resetar cronômetro</ModalHeader>
+          <ModalBody>
+            <Alert
+              color="danger"
+              title="Tem certeza de que deseja resetar o cronômetro?"
+              icon={<FaExclamation size={24} className="text-danger" />}
+              classNames={{
+                base: 'items-center',
+                iconWrapper: 'shadow-none bg-danger-50 border-none',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="bordered"
+              onPress={() => setShowResetDialog(false)}
+              color="danger"
+            >
               Cancelar
             </Button>
             <Button
-              onClick={() => {
+              onPress={() => {
                 resetTimer()
                 setShowResetDialog(false)
               }}
+              color="secondary"
             >
               Confirmar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   )
 }

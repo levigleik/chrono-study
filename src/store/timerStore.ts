@@ -26,8 +26,14 @@ export const useTimerStore = create<TimerStore>()(
       selectedDiscipline: null,
       sessions: [],
 
-      setSubject: (subject) => set({ selectedSubject: subject }),
-      setDiscipline: (discipline) => set({ selectedDiscipline: discipline }),
+      setSubject: (subject) => {
+        set({ selectedSubject: subject })
+        if (get().elapsedTime > 0) get().resetTimer()
+      },
+      setDiscipline: (discipline) => {
+        set({ selectedDiscipline: discipline })
+        if (get().elapsedTime > 0) get().resetTimer()
+      },
 
       startTimer: () => {
         const { isRunning } = get()

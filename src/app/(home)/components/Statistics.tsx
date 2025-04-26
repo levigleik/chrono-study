@@ -1,15 +1,6 @@
 'use client'
 
-import { type ChartConfig } from '@/components/ui/chart'
-
-import {
-  SortingState,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+import type { ChartConfig } from '@/components/ui/chart'
 
 import Theme from '@/app/(home)/components/Theme'
 import { useTimerStore } from '@/store/timerStore'
@@ -17,9 +8,10 @@ import { useMemo, useState } from 'react'
 import { calculateTopStudied, columns } from '../utils'
 import { StatisticsCard } from './StatisticsCard'
 
+/**
+ * Componente que exibe o card de estatísticas.
+ */
 export function Statistics() {
-  const [sorting, setSorting] = useState<SortingState>([])
-
   const data = useTimerStore((state) => state.sessions)
 
   const topDisciplines = useMemo(
@@ -32,44 +24,28 @@ export function Statistics() {
     [data],
   )
 
-  const table = useReactTable({
-    data: topSubjects,
-    columns,
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-    },
-  })
-
   const chartData = topDisciplines?.map((item, index) => ({
     name: item.name,
     duration: item.duration,
     fill: `var(--chart-${index + 1})`,
   }))
 
-  const chartConfig = topDisciplines?.reduce(
-    (config, item, index) => ({
-      ...config,
-      [item.name]: {
-        label: item.name,
-        color: `var(--chart-${index + 1})`,
-      },
-    }),
-    { duration: { label: 'Tempo' } } as ChartConfig,
-  )
+  const chartConfig = topDisciplines
+    ? (Object.fromEntries(
+        topDisciplines.map((item, index) => [
+          item.name,
+          {
+            label: item.name,
+            color: `var(--chart-${index + 1})`,
+          },
+        ]),
+      ) as ChartConfig)
+    : { duration: { label: 'Tempo' } }
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-4 flex justify-between">
-        <h1 className="text-2xl font-bold">Estatísticas</h1>
-        <Theme className="hidden lg:flex" />
-      </div>
       <StatisticsCard
-        table={table}
+        tableData={topSubjects}
         chartData={chartData}
         chartConfig={chartConfig}
       />
