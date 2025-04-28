@@ -2,6 +2,7 @@
 
 import TitlebarButtons from '@/components/TitlebarButtons'
 import { useFocusStore } from '@/store/focusStore'
+import { useTimerMinimized } from '@/store/timerMinimized'
 import { useTimerStore } from '@/store/timerStore'
 import {
   Button,
@@ -15,16 +16,21 @@ import {
   cn,
 } from '@heroui/react'
 import { useEffect, useRef } from 'react'
+import { FaTrash } from 'react-icons/fa'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
-import { useTimerMinimized } from '@/store/timerMinimized'
-import { FaTrash } from 'react-icons/fa'
 
 /**
  * Componente que exibe o card do Chrono Study.
  */
 
-export function ChronoStudyCard() {
+export function ChronoStudyCard({
+  classNameCard,
+  classNameBody,
+}: {
+  classNameCard?: string
+  classNameBody?: string
+}) {
   const {
     selectedSubject,
     setDiscipline,
@@ -86,7 +92,7 @@ export function ChronoStudyCard() {
           }}
         />
       </CardHeader> */}
-      <CardBody className="p-6">
+      <CardBody className={cn('justify-between p-6', classNameBody)}>
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex items-end justify-center gap-2">

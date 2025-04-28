@@ -99,59 +99,62 @@ export function TimerMinimized() {
   }
 
   // Estado inicial centralizado na base da tela
-  const [position, setPosition] = useState({ x: window.innerWidth / 2 - 120, y: window.innerHeight - 120 })
+  const [position, setPosition] = useState({
+    x: window.innerWidth / 2 - 120,
+    y: window.innerHeight - 120,
+  })
   const [dragging, setDragging] = useState(false)
   const offset = useState({ x: 0, y: 0 })
 
-  // Mouse events
-  const onMouseDown = (e: React.MouseEvent) => {
-    setDragging(true)
-    offset.current = {
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    }
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onMouseUp)
-  }
+  // // Mouse events
+  // const onMouseDown = (e: React.MouseEvent) => {
+  //   setDragging(true)
+  //   offset.current = {
+  //     x: e.clientX - position.x,
+  //     y: e.clientY - position.y,
+  //   }
+  //   window.addEventListener('mousemove', onMouseMove)
+  //   window.addEventListener('mouseup', onMouseUp)
+  // }
 
-  const onMouseMove = (e: MouseEvent) => {
-    setPosition({
-      x: e.clientX - offset.current.x,
-      y: e.clientY - offset.current.y,
-    })
-  }
+  // const onMouseMove = (e: MouseEvent) => {
+  //   setPosition({
+  //     x: e.clientX - offset.current.x,
+  //     y: e.clientY - offset.current.y,
+  //   })
+  // }
 
-  const onMouseUp = () => {
-    setDragging(false)
-    window.removeEventListener('mousemove', onMouseMove)
-    window.removeEventListener('mouseup', onMouseUp)
-  }
+  // const onMouseUp = () => {
+  //   setDragging(false)
+  //   window.removeEventListener('mousemove', onMouseMove)
+  //   window.removeEventListener('mouseup', onMouseUp)
+  // }
 
-  // Touch events para mobile
-  const onTouchStart = (e: React.TouchEvent) => {
-    setDragging(true)
-    const touch = e.touches[0]
-    offset.current = {
-      x: touch.clientX - position.x,
-      y: touch.clientY - position.y,
-    }
-    window.addEventListener('touchmove', onTouchMove)
-    window.addEventListener('touchend', onTouchEnd)
-  }
+  // // Touch events para mobile
+  // const onTouchStart = (e: React.TouchEvent) => {
+  //   setDragging(true)
+  //   const touch = e.touches[0]
+  //   offset.current = {
+  //     x: touch.clientX - position.x,
+  //     y: touch.clientY - position.y,
+  //   }
+  //   window.addEventListener('touchmove', onTouchMove)
+  //   window.addEventListener('touchend', onTouchEnd)
+  // }
 
-  const onTouchMove = (e: TouchEvent) => {
-    const touch = e.touches[0]
-    setPosition({
-      x: touch.clientX - offset.current.x,
-      y: touch.clientY - offset.current.y,
-    })
-  }
+  // const onTouchMove = (e: TouchEvent) => {
+  //   const touch = e.touches[0]
+  //   setPosition({
+  //     x: touch.clientX - offset.current.x,
+  //     y: touch.clientY - offset.current.y,
+  //   })
+  // }
 
-  const onTouchEnd = () => {
-    setDragging(false)
-    window.removeEventListener('touchmove', onTouchMove)
-    window.removeEventListener('touchend', onTouchEnd)
-  }
+  // const onTouchEnd = () => {
+  //   setDragging(false)
+  //   window.removeEventListener('touchmove', onTouchMove)
+  //   window.removeEventListener('touchend', onTouchEnd)
+  // }
 
   return (
     <Card
@@ -167,9 +170,9 @@ export function TimerMinimized() {
       }}
     >
       <CardHeader
-        className="flex gap-2 cursor-grab active:cursor-grabbing"
-        onMouseDown={onMouseDown}
-        onTouchStart={onTouchStart}
+        className="flex cursor-grab gap-2 active:cursor-grabbing"
+        // onMouseDown={onMouseDown}
+        // onTouchStart={onTouchStart}
       >
         <TitlebarButtons
           linkMinus="/"
