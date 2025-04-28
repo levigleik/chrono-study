@@ -1,13 +1,19 @@
 'use client'
 
+import { disciplinesData } from '@/lib/discipline-data'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { StudySession, TimerState } from '../types'
+import type { DisciplineState, StudySession, TimerState } from '../types'
 
 interface TimerStore extends TimerState {
   sessions: StudySession[]
   setSubject: (subject: string) => void
   setDiscipline: (discipline: string) => void
+  disciplines: DisciplineState[]
+  addDiscipline: (discipline: string) => void
+  // removeDiscipline: (disciplineName: string) => void
+  addSubject: (disciplineName: string, subject: string) => void
+  // removeSubject: (disciplineName: string, subject: string) => void
   startTimer: () => void
   pauseTimer: () => void
   resetTimer: () => void
@@ -25,6 +31,50 @@ export const useTimerStore = create<TimerStore>()(
       selectedSubject: null,
       selectedDiscipline: null,
       sessions: [],
+      disciplines: disciplinesData,
+
+      addDiscipline: (discipline) =>
+        set((state) => ({
+          disciplines: [
+            ...state.disciplines,
+            { name: discipline, subjects: [] },
+          ],
+          selectedDiscipline: discipline,
+          selectedSubject: null,
+        })),
+
+      // removeDiscipline: (disciplineName) =>
+      //   set((state) => ({
+      //     disciplines: state.disciplines.filter(
+      //       (discipline) => discipline.name !== disciplineName,
+      //     ),
+      //   })),
+
+      addSubject: (disciplineName, subject) =>
+        set((state) => ({
+          disciplines: state.disciplines.map((discipline) =>
+            discipline.name === disciplineName
+              ? {
+                  ...discipline,
+                  subjects: [...discipline.subjects, subject],
+                }
+              : discipline,
+          ),
+          selectedSubject: subject,
+        })),
+      // removeSubject: (disciplineName, subject) =>
+      //   set((state) => ({
+      //     disciplines: state.disciplines.map((discipline) =>
+      //       discipline.name === disciplineName
+      //         ? {
+      //             ...discipline,
+      //             subjects: discipline.subjects.filter(
+      //               (s) => s.name !== subject,
+      //             ),
+      //           }
+      //         : discipline,
+      //     ),
+      //   })),
 
       setSubject: (subject) => {
         set({ selectedSubject: subject })

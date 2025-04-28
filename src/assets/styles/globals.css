@@ -138,3 +138,26 @@
     font-style: normal;
   }
 }
+
+/* ViewTransition API styles para o ChronoStudyCard */
+::view-transition-old(chrono-card),
+::view-transition-new(chrono-card) {
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  transition: border-radius 0.3s, box-shadow 0.3s;
+  /* Você pode ajustar mais estilos para suavizar ainda mais */
+}
+
+::view-transition-old(chrono-card) {
+  z-index: 1;
+}
+::view-transition-new(chrono-card) {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(chrono-card),
+  ::view-transition-new(chrono-card) {
+    transition: none;
+  }
+}

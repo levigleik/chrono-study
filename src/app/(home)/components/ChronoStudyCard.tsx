@@ -1,14 +1,20 @@
 'use client'
-import Theme from '@/app/(home)/components/Theme'
 
-import { useDisciplineStore } from '@/store/disciplineStore'
+import TitlebarButtons from '@/components/TitlebarButtons'
 import { useFocusStore } from '@/store/focusStore'
 import { useTimerStore } from '@/store/timerStore'
-import { Button, Card, CardBody, Select, SelectItem, cn } from '@heroui/react'
-import { PlusIcon } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Select,
+  SelectItem,
+  cn,
+} from '@heroui/react'
+import { useEffect, useRef } from 'react'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
+import { useTimerMinimized } from '@/store/timerMinimized'
 
 /**
  * Componente que exibe o card do Chrono Study.
@@ -21,23 +27,16 @@ export function ChronoStudyCard() {
     selectedDiscipline,
     setSubject,
     isRunning,
-  } = useTimerStore()
-
-  const {
     disciplines: disciplinesData,
-    addDiscipline,
-    addSubject,
-  } = useDisciplineStore()
+  } = useTimerStore()
 
   const subjects = disciplinesData
     .find((discipline) => discipline.name === selectedDiscipline)
     ?.subjects?.map((name) => ({ name }))
 
-  const [showDisciplines, setShowDisciplines] = useState(false)
-  const [showSubjects, setShowSubjects] = useState(false)
-
   const setDivRef = useFocusStore((state) => state.setDivRef)
   const divRef = useRef<HTMLDivElement>(null)
+  const { setIsMinimized, isMinimized } = useTimerMinimized()
 
   useEffect(() => {
     if (divRef.current) {
@@ -45,32 +44,27 @@ export function ChronoStudyCard() {
     }
   }, [setDivRef])
 
-  const handleSubmit = (
-    values: { name: string },
-    type: 'discipline' | 'subject',
-  ) => {
-    if (type === 'discipline') {
-      addDiscipline(values.name)
-      setDiscipline(values.name)
-      setSubject('')
-    } else {
-      if (!selectedDiscipline) return
-      addSubject(selectedDiscipline, values.name)
-      setSubject(values.name)
-    }
-  }
-
   return (
     <Card
       ref={divRef}
       tabIndex={-1}
       className={cn(
         '!transition-shadow flex min-h-fit w-full grow overflow-auto',
-        'border bg-card p-6 duration-300 ease-in-out hover:shadow-large',
+        'border bg-card duration-300 ease-in-out hover:shadow-large',
         'focus:border-secondary-500',
       )}
     >
-      <CardBody className="gap-8">
+      {/* <CardHeader className="flex gap-2 ">
+        <TitlebarButtons
+          linkMinus="/"
+          linkPlus="/chrono"
+          linkTimes="/"
+          onClickMinus={() => {
+            setIsMinimized(!isMinimized)
+          }}
+        />
+      </CardHeader> */}
+      <CardBody className="p-6">
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex items-end justify-center gap-2">
@@ -104,12 +98,7 @@ export function ChronoStudyCard() {
                   </SelectItem>
                 )}
               </Select>
-              <AddDisciplineSubject
-                open={showDisciplines}
-                onOpenChange={setShowDisciplines}
-                type="discipline"
-                onSubmit={async (values) => handleSubmit(values, 'discipline')}
-              />
+              <AddDisciplineSubject type="discipline" />
             </div>
           </div>
 
@@ -143,10 +132,7 @@ export function ChronoStudyCard() {
                 )}
               </Select>
               <AddDisciplineSubject
-                open={showSubjects}
-                onOpenChange={setShowSubjects}
                 type="subject"
-                onSubmit={(values) => handleSubmit(values, 'subject')}
                 disabled={!selectedDiscipline}
               />
             </div>

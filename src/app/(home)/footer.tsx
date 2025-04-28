@@ -1,7 +1,10 @@
 'use client'
 import { Link } from '@heroui/react'
+import TimerMinimized from './components/TimerMinimized'
+import { useTimerMinimized } from '@/store/timerMinimized'
 
 export default function Footer() {
+  const { isMinimized } = useTimerMinimized()
   return (
     <footer className="mt-16 border-t bg-background py-6">
       <div className="mx-auto max-w-[1440px] px-4 text-center text-sm">
@@ -15,6 +18,7 @@ export default function Footer() {
         </Link>{' '}
         • 2025
       </div>
+      {isMinimized && <TimerMinimized />}
     </footer>
   )
 }

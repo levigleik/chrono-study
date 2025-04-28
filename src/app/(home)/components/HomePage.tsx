@@ -3,8 +3,12 @@ import { motion } from 'framer-motion'
 import { ChronoStudyCard } from '../components/ChronoStudyCard'
 import { HistoryCard } from '../components/HistoryCard'
 import { Statistics } from '../components/Statistics'
+import { unstable_ViewTransition as ViewTransition } from 'react'
+import { TimerMinimized } from './TimerMinimized'
+import { useTimerMinimized } from '@/store/timerMinimized'
 
 export default function HomePage() {
+  const { isMinimized } = useTimerMinimized()
   return (
     <>
       <motion.div
@@ -13,7 +17,10 @@ export default function HomePage() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0 }}
       >
-        <ChronoStudyCard />
+        <ViewTransition name="chrono-card">
+          {!isMinimized && <ChronoStudyCard />}
+        </ViewTransition>
+
         <motion.div
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -22,7 +29,6 @@ export default function HomePage() {
           <HistoryCard />
         </motion.div>
       </motion.div>
-
       <motion.div
         className="w-full flex-grow lg:max-w-1/3"
         initial={{ y: 40, opacity: 0 }}
