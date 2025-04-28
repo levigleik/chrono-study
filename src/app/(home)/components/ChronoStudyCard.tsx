@@ -1,12 +1,22 @@
 'use client'
-import Theme from '@/app/(home)/components/Theme'
 
-import { useDisciplineStore } from '@/store/disciplineStore'
+import TitlebarButtons from '@/components/TitlebarButtons'
 import { useFocusStore } from '@/store/focusStore'
+import { useTimerMinimized } from '@/store/timerMinimized'
 import { useTimerStore } from '@/store/timerStore'
-import { Button, Card, CardBody, Select, SelectItem, cn } from '@heroui/react'
-import { PlusIcon } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Select,
+  SelectItem,
+  Tooltip,
+  addToast,
+  cn,
+} from '@heroui/react'
+import { useEffect, useRef } from 'react'
+import { FaTrash } from 'react-icons/fa'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
 
@@ -14,30 +24,31 @@ import { Timer } from './Timer'
  * Componente que exibe o card do Chrono Study.
  */
 
-export function ChronoStudyCard() {
+export function ChronoStudyCard({
+  classNameCard,
+  classNameBody,
+}: {
+  classNameCard?: string
+  classNameBody?: string
+}) {
   const {
     selectedSubject,
     setDiscipline,
     selectedDiscipline,
+    removeDiscipline,
+    removeSubject,
     setSubject,
     isRunning,
-  } = useTimerStore()
-
-  const {
     disciplines: disciplinesData,
-    addDiscipline,
-    addSubject,
-  } = useDisciplineStore()
+  } = useTimerStore()
 
   const subjects = disciplinesData
     .find((discipline) => discipline.name === selectedDiscipline)
     ?.subjects?.map((name) => ({ name }))
 
-  const [showDisciplines, setShowDisciplines] = useState(false)
-  const [showSubjects, setShowSubjects] = useState(false)
-
   const setDivRef = useFocusStore((state) => state.setDivRef)
   const divRef = useRef<HTMLDivElement>(null)
+  const { setIsMinimized, isMinimized } = useTimerMinimized()
 
   useEffect(() => {
     if (divRef.current) {
@@ -45,19 +56,20 @@ export function ChronoStudyCard() {
     }
   }, [setDivRef])
 
-  const handleSubmit = (
-    values: { name: string },
-    type: 'discipline' | 'subject',
-  ) => {
-    if (type === 'discipline') {
-      addDiscipline(values.name)
-      setDiscipline(values.name)
-      setSubject('')
-    } else {
-      if (!selectedDiscipline) return
-      addSubject(selectedDiscipline, values.name)
-      setSubject(values.name)
-    }
+  const handleRemoveDiscipline = (disciplineName: string) => {
+    removeDiscipline(disciplineName)
+    addToast({
+      title: 'Disciplina removida',
+      color: 'success',
+    })
+  }
+
+  const handleRemoveSubject = (disciplineName: string, subject: string) => {
+    removeSubject(disciplineName, subject)
+    addToast({
+      title: 'Tema removido',
+      color: 'success',
+    })
   }
 
   return (
@@ -66,11 +78,21 @@ export function ChronoStudyCard() {
       tabIndex={-1}
       className={cn(
         '!transition-shadow flex min-h-fit w-full grow overflow-auto',
-        'border bg-card p-6 duration-300 ease-in-out hover:shadow-large',
+        'border bg-card duration-300 ease-in-out hover:shadow-large',
         'focus:border-secondary-500',
       )}
     >
-      <CardBody>
+      {/* <CardHeader className="flex gap-2 ">
+        <TitlebarButtons
+          linkMinus="/"
+          linkPlus="/chrono"
+          linkTimes="/"
+          onClickMinus={() => {
+            setIsMinimized(!isMinimized)
+          }}
+        />
+      </CardHeader> */}
+      <CardBody className={cn('justify-between p-6', classNameBody)}>
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex items-end justify-center gap-2">
@@ -89,6 +111,9 @@ export function ChronoStudyCard() {
                 labelPlacement={'outside'}
                 isDisabled={isRunning}
                 items={disciplinesData ?? []}
+                listboxProps={{
+                  emptyContent: 'Nenhuma disciplina encontrada',
+                }}
                 // renderValue={(item) => (
                 //   <span className="text-medium">{item.name}</span>
                 // )}
@@ -99,17 +124,29 @@ export function ChronoStudyCard() {
                     key={item.name}
                     className="capitalize"
                     textValue={item.name}
+                    endContent={
+                      <Tooltip
+                        content="Deletar disciplina"
+                        placement="bottom-end"
+                      >
+                        <Button
+                          variant="light"
+                          size="sm"
+                          isIconOnly
+                          radius="full"
+                          color="danger"
+                          onPress={() => handleRemoveDiscipline(item.name)}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </Tooltip>
+                    }
                   >
                     {item.name}
                   </SelectItem>
                 )}
               </Select>
-              <AddDisciplineSubject
-                open={showDisciplines}
-                onOpenChange={setShowDisciplines}
-                type="discipline"
-                onSubmit={async (values) => handleSubmit(values, 'discipline')}
-              />
+              <AddDisciplineSubject type="discipline" />
             </div>
           </div>
 
@@ -129,6 +166,9 @@ export function ChronoStudyCard() {
                 variant="bordered"
                 selectedKeys={[selectedSubject ?? '']}
                 labelPlacement={'outside'}
+                listboxProps={{
+                  emptyContent: 'Nenhum tema encontrado',
+                }}
                 items={subjects ?? []}
                 onChange={(e) => setSubject(e.target?.value)}
               >
@@ -137,16 +177,32 @@ export function ChronoStudyCard() {
                     key={item.name}
                     className="capitalize"
                     textValue={item.name}
+                    endContent={
+                      <Tooltip content="Deletar tema" placement="bottom-end">
+                        <Button
+                          variant="light"
+                          size="sm"
+                          isIconOnly
+                          radius="full"
+                          color="danger"
+                          onPress={() =>
+                            handleRemoveSubject(
+                              selectedDiscipline ?? '',
+                              item.name,
+                            )
+                          }
+                        >
+                          <FaTrash />
+                        </Button>
+                      </Tooltip>
+                    }
                   >
                     {item.name}
                   </SelectItem>
                 )}
               </Select>
               <AddDisciplineSubject
-                open={showSubjects}
-                onOpenChange={setShowSubjects}
                 type="subject"
-                onSubmit={(values) => handleSubmit(values, 'subject')}
                 disabled={!selectedDiscipline}
               />
             </div>

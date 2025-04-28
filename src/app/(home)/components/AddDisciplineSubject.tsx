@@ -1,46 +1,34 @@
 'use client'
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from '@/components/ui/form'
 
 import { HighlightCard } from '@/app/(home)/components/HighlightCard'
 import { useTimerStore } from '@/store/timerStore'
 import {
+  addToast,
   Button,
   Form,
   Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  toast,
+  useDisclosure,
 } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { IoBook } from 'react-icons/io5'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'É necessário preencher o campo.',
+    message: 'O nome deve ter pelo menos 2 caracteres.',
   }),
 })
 
+type FormSchema = z.infer<typeof formSchema>
+
 interface AddDisciplineSubjectProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
   type: 'discipline' | 'subject'
-  onSubmit: (values: z.infer<typeof formSchema>) => void
   disabled?: boolean
 }
 
@@ -54,43 +42,73 @@ interface AddDisciplineSubjectProps {
  * @param disabled - Booleano que controla se o botão de adicionar está desabilitado.
  */
 export function AddDisciplineSubject({
-  open,
-  onOpenChange,
   type,
-  onSubmit,
   disabled,
 }: AddDisciplineSubjectProps) {
-  const { isRunning } = useTimerStore()
+  const {
+    isRunning,
+    addDiscipline,
+    addSubject,
+    setSubject,
+    selectedDiscipline,
+    disciplines,
+  } = useTimerStore()
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
     },
+    // errors: { name: { message: 'asd', type: 'min' } },
   })
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
-    onSubmit(values)
-    toast.success(
-      type === 'discipline'
-        ? 'Disciplina adicionada com sucesso'
-        : 'Tema adicionado com sucesso',
-    )
+  const { isOpen, onOpenChange, onClose } = useDisclosure()
+
+  function handleSubmit(values: FormSchema) {
+    if (type === 'discipline') {
+      if (disciplines.find((d) => d.name === values.name)) {
+        addToast({
+          title: 'Disciplina já existe',
+          color: 'danger',
+        })
+        return
+      }
+      addDiscipline(values.name)
+    } else {
+      if (!selectedDiscipline) return
+      if (
+        disciplines
+          .find((d) => d.name === selectedDiscipline)
+          ?.subjects.find((s) => s === values.name)
+      ) {
+        addToast({
+          title: 'Tema já existe',
+          color: 'danger',
+        })
+        return
+      }
+      addSubject(selectedDiscipline, values.name)
+    }
+    addToast({
+      title:
+        type === 'discipline' ? 'Disciplina adicionada' : 'Tema adicionado',
+      color: 'success',
+    })
     form.reset()
-    onOpenChange(false)
+    onClose()
   }
 
   return (
     <Popover
       placement="bottom-end"
-      // showArrow
       classNames={{
         content: 'bg-card border',
       }}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
     >
       <PopoverTrigger>
         <Button
-          // onPress={() => onOpenChange(!open)}
           radius="full"
           isIconOnly
           size="sm"
@@ -104,59 +122,54 @@ export function AddDisciplineSubject({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-sm items-start gap-4 p-4">
-        {(titleProps) => (
-          <>
-            <div className="text-left font-semibold text-lg">
-              {type === 'discipline' ? 'Nova disciplina' : 'Novo tema'}
-            </div>
-            {type === 'subject' && (
-              <HighlightCard
-                title="Disicplina"
-                subtitle="Matemática"
-                icon={<IoBook size={36} className="text-white" />}
+        <div className="text-left font-semibold text-lg">
+          {type === 'discipline' ? 'Nova disciplina' : 'Novo tema'}
+        </div>
+        {type === 'subject' && (
+          <HighlightCard
+            title="Disicplina"
+            subtitle="Matemática"
+            icon={<IoBook size={36} className="text-white" />}
+          />
+        )}
+        <Form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="grid w-full gap-4"
+        >
+          <Controller
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <Input
+                {...field}
+                variant="bordered"
+                placeholder={
+                  type === 'discipline' ? 'Ex: Matemática' : 'Ex: Álgebra'
+                }
+                autoFocus
+                radius="full"
+                classNames={{
+                  inputWrapper: 'w-full',
+                }}
+                isInvalid={!!fieldState.error}
+                errorMessage={fieldState.error?.message}
               />
             )}
-            <Form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="grid w-full gap-4"
-            >
-              <Controller
-                control={form.control}
-                name="name"
-                render={({ field, fieldState }) => (
-                  <Input
-                    variant="bordered"
-                    placeholder={
-                      type === 'discipline' ? 'Ex: Matemática' : 'Ex: Álgebra'
-                    }
-                    autoFocus
-                    // label={type === 'discipline' ? 'Disciplina' : 'Tema'}
-                    // labelPlacement="outside"
-                    radius="full"
-                    isRequired
-                    classNames={{
-                      inputWrapper: 'w-full',
-                    }}
-                    // errorMessage={}
-                  />
-                )}
-              />
+          />
 
-              <Button
-                type="submit"
-                className="w-auto text-foreground lg:flex-1"
-                radius="full"
-                variant="bordered"
-                color="primary"
-                aria-label={
-                  type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
-                }
-              >
-                Salvar
-              </Button>
-            </Form>
-          </>
-        )}
+          <Button
+            type="submit"
+            className="w-auto text-foreground lg:flex-1"
+            radius="full"
+            variant="bordered"
+            color="primary"
+            aria-label={
+              type === 'discipline' ? 'Salvar disciplina' : 'Salvar tema'
+            }
+          >
+            Salvar
+          </Button>
+        </Form>
       </PopoverContent>
     </Popover>
   )
