@@ -4,17 +4,21 @@ import TitlebarButtons from '@/components/TitlebarButtons'
 import { useFocusStore } from '@/store/focusStore'
 import { useTimerStore } from '@/store/timerStore'
 import {
+  Button,
   Card,
   CardBody,
   CardHeader,
   Select,
   SelectItem,
+  Tooltip,
+  addToast,
   cn,
 } from '@heroui/react'
 import { useEffect, useRef } from 'react'
 import { AddDisciplineSubject } from './AddDisciplineSubject'
 import { Timer } from './Timer'
 import { useTimerMinimized } from '@/store/timerMinimized'
+import { FaTrash } from 'react-icons/fa'
 
 /**
  * Componente que exibe o card do Chrono Study.
@@ -25,6 +29,8 @@ export function ChronoStudyCard() {
     selectedSubject,
     setDiscipline,
     selectedDiscipline,
+    removeDiscipline,
+    removeSubject,
     setSubject,
     isRunning,
     disciplines: disciplinesData,
@@ -43,6 +49,22 @@ export function ChronoStudyCard() {
       setDivRef(divRef.current)
     }
   }, [setDivRef])
+
+  const handleRemoveDiscipline = (disciplineName: string) => {
+    removeDiscipline(disciplineName)
+    addToast({
+      title: 'Disciplina removida',
+      color: 'success',
+    })
+  }
+
+  const handleRemoveSubject = (disciplineName: string, subject: string) => {
+    removeSubject(disciplineName, subject)
+    addToast({
+      title: 'Tema removido',
+      color: 'success',
+    })
+  }
 
   return (
     <Card
@@ -83,6 +105,9 @@ export function ChronoStudyCard() {
                 labelPlacement={'outside'}
                 isDisabled={isRunning}
                 items={disciplinesData ?? []}
+                listboxProps={{
+                  emptyContent: 'Nenhuma disciplina encontrada',
+                }}
                 // renderValue={(item) => (
                 //   <span className="text-medium">{item.name}</span>
                 // )}
@@ -93,6 +118,23 @@ export function ChronoStudyCard() {
                     key={item.name}
                     className="capitalize"
                     textValue={item.name}
+                    endContent={
+                      <Tooltip
+                        content="Deletar disciplina"
+                        placement="bottom-end"
+                      >
+                        <Button
+                          variant="light"
+                          size="sm"
+                          isIconOnly
+                          radius="full"
+                          color="danger"
+                          onPress={() => handleRemoveDiscipline(item.name)}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </Tooltip>
+                    }
                   >
                     {item.name}
                   </SelectItem>
@@ -118,6 +160,9 @@ export function ChronoStudyCard() {
                 variant="bordered"
                 selectedKeys={[selectedSubject ?? '']}
                 labelPlacement={'outside'}
+                listboxProps={{
+                  emptyContent: 'Nenhum tema encontrado',
+                }}
                 items={subjects ?? []}
                 onChange={(e) => setSubject(e.target?.value)}
               >
@@ -126,6 +171,25 @@ export function ChronoStudyCard() {
                     key={item.name}
                     className="capitalize"
                     textValue={item.name}
+                    endContent={
+                      <Tooltip content="Deletar tema" placement="bottom-end">
+                        <Button
+                          variant="light"
+                          size="sm"
+                          isIconOnly
+                          radius="full"
+                          color="danger"
+                          onPress={() =>
+                            handleRemoveSubject(
+                              selectedDiscipline ?? '',
+                              item.name,
+                            )
+                          }
+                        >
+                          <FaTrash />
+                        </Button>
+                      </Tooltip>
+                    }
                   >
                     {item.name}
                   </SelectItem>

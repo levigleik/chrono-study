@@ -11,9 +11,9 @@ interface TimerStore extends TimerState {
   setDiscipline: (discipline: string) => void
   disciplines: DisciplineState[]
   addDiscipline: (discipline: string) => void
-  // removeDiscipline: (disciplineName: string) => void
+  removeDiscipline: (disciplineName: string) => void
   addSubject: (disciplineName: string, subject: string) => void
-  // removeSubject: (disciplineName: string, subject: string) => void
+  removeSubject: (disciplineName: string, subject: string) => void
   startTimer: () => void
   pauseTimer: () => void
   resetTimer: () => void
@@ -43,12 +43,14 @@ export const useTimerStore = create<TimerStore>()(
           selectedSubject: null,
         })),
 
-      // removeDiscipline: (disciplineName) =>
-      //   set((state) => ({
-      //     disciplines: state.disciplines.filter(
-      //       (discipline) => discipline.name !== disciplineName,
-      //     ),
-      //   })),
+      removeDiscipline: (disciplineName) =>
+        set((state) => ({
+          disciplines: state.disciplines.filter(
+            (discipline) => discipline.name !== disciplineName,
+          ),
+          selectedDiscipline: null,
+          selectedSubject: null,
+        })),
 
       addSubject: (disciplineName, subject) =>
         set((state) => ({
@@ -62,19 +64,17 @@ export const useTimerStore = create<TimerStore>()(
           ),
           selectedSubject: subject,
         })),
-      // removeSubject: (disciplineName, subject) =>
-      //   set((state) => ({
-      //     disciplines: state.disciplines.map((discipline) =>
-      //       discipline.name === disciplineName
-      //         ? {
-      //             ...discipline,
-      //             subjects: discipline.subjects.filter(
-      //               (s) => s.name !== subject,
-      //             ),
-      //           }
-      //         : discipline,
-      //     ),
-      //   })),
+      removeSubject: (disciplineName, subject) =>
+        set((state) => ({
+          disciplines: state.disciplines.map((discipline) =>
+            discipline.name === disciplineName
+              ? {
+                  ...discipline,
+                  subjects: discipline.subjects.filter((s) => s !== subject),
+                }
+              : discipline,
+          ),
+        })),
 
       setSubject: (subject) => {
         set({ selectedSubject: subject })
