@@ -9,13 +9,15 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 
 - **Next.js**: Framework para renderização do lado do servidor (SSR) e geração de sites estáticos.
 - **Tailwind CSS**: Framework de utilitários CSS para estilização rápida e responsiva.
+- **ViewTransitionsAPI**: Nova API para transições de páginas suaves.
+- **Framer Motion**: Animações e transições.
+- **Storybook**: Biblioteca para criação da documentação dos componentes.
 - **zod**: Biblioteca de validação e parsing de esquemas TypeScript-first, utilizada para garantir a integridade dos dados no projeto.
 - **react-hook-form**: Biblioteca para gerenciamento de formulários, proporcionando uma experiência simples e eficiente.
 - **next-themes**: Gerenciamento de temas (claro e escuro).
 - **lucide-react**: Ícones modernos e leves.
-- **shadcn/ui**: Biblioteca de componentes reutilizáveis e estilizáveis.
-- **sonner**: Utilizado para exibir os alertas de sucesso.
-- **next/font**: Selecionado Libre_Baskerville como fonte padrão do projeto.
+- **HeroUI**: Biblioteca de componentes reutilizáveis e estilizáveis.
+- **next/font**: Selecionado Poppins como fonte padrão do projeto.
 
 ## 🌟 Funcionalidades
 
@@ -29,64 +31,102 @@ Este é um projeto desenvolvido em **React** com **Next.js**, focado em gerencia
 O projeto segue uma estrutura modular, com componentes organizados por página e reutilizáveis:
 
 ```plaintext
-├── src
-│   ├── app
-│   │   ├── (home)
-│   │   │   ├── components
-│   │   │   │   ├── AddDisciplineSubject.tsx
-│   │   │   │   ├── ChronoStudyCard.tsx
-│   │   │   │   ├── HistoryCard.tsx
-│   │   │   │   ├── HistoryItem.tsx
-│   │   │   │   ├── Statistics.tsx
-│   │   │   │   ├── StatisticsCard.tsx
-│   │   │   │   ├── Theme.tsx
-│   │   │   │   └── Timer.tsx
-│   │   │   ├── tests
-│   │   │   │   ├── AddDisciplineSubject.test.tsx
-│   │   │   │   ├── ChronoStudyCard.test.tsx
-│   │   │   │   ├── HelperForm.tsx
-│   │   │   │   ├── HistoryItem.test.tsx
-│   │   │   │   ├── Statistics.test.tsx
-│   │   │   │   ├── Theme.test.tsx
-│   │   │   │   └── Timer.test.tsx
-│   │   │   ├── layout.tsx
-│   │   │   ├── page.tsx
-│   │   │   └── utils.tsx
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── providers.tsx
-│   ├── components
-│   │   ├── hooks
-│   │   │   └── use-interval.tsx
-│   │   ├── providers
-│   │   │   ├── theme-provider.tsx
-│   │   │   └── tooltip-provider.tsx
-│   │   └── ui
-│   │       ├── button.tsx
-│   │       ├── card.tsx
-│   │       ├── chart.tsx
-│   │       ├── dialog.tsx
-│   │       ├── dropdown-menu.tsx
-│   │       ├── form.tsx
-│   │       ├── input.tsx
-│   │       ├── label.tsx
-│   │       ├── popover.tsx
-│   │       ├── resizable.tsx
-│   │       ├── select.tsx
-│   │       ├── sonner.tsx
-│   │       ├── table.tsx
-│   │       └── tooltip.tsx
-│   ├── lib
-│   │   ├── discipline-data.ts
-│   │   └── utils.ts
-│   ├── store
-│   │   ├── disciplineStore.ts
-│   │   └── timerStore.ts
-│   └── types
-│       └── index.ts
-├── jest.config.ts
-├── jest.setup.ts
-└── next.config.ts
+├─ .gitignore
+├─ .idea
+│  ├─ .gitignore
+│  ├─ biome.xml
+│  ├─ chrono-study.iml
+│  ├─ codeStyles
+│  │  ├─ Project.xml
+│  │  └─ codeStyleConfig.xml
+│  ├─ material_theme_project_new.xml
+│  ├─ modules.xml
+│  ├─ prettier.xml
+│  └─ vcs.xml
+├─ README.md
+├─ biome.json
+├─ bun.lock
+├─ components.json
+├─ dashboard.png
+├─ jest.config.ts
+├─ jest.setup.ts
+├─ next.config.ts
+├─ package.json
+├─ postcss.config.mjs
+├─ public
+│  ├─ fonts
+│  │  ├─ clockicons.woff
+│  │  └─ clockicons.woff2
+│  ├─ icon512_maskable.png
+│  └─ icon512_rounded.png
+├─ src
+│  ├─ app
+│  │  ├─ (home)
+│  │  │  ├─ chrono
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ components
+│  │  │  │  ├─ AddDisciplineSubject.tsx
+│  │  │  │  ├─ ChronoStudyCard.tsx
+│  │  │  │  ├─ HighlightCard.tsx
+│  │  │  │  ├─ HistoryCard.tsx
+│  │  │  │  ├─ HistoryItem.tsx
+│  │  │  │  ├─ HomePage.tsx
+│  │  │  │  ├─ Statistics.tsx
+│  │  │  │  ├─ StatisticsCard.tsx
+│  │  │  │  ├─ Theme.tsx
+│  │  │  │  ├─ Timer.tsx
+│  │  │  │  └─ TimerMinimized.tsx
+│  │  │  ├─ footer.tsx
+│  │  │  ├─ header.tsx
+│  │  │  ├─ layout.tsx
+│  │  │  ├─ page.tsx
+│  │  │  ├─ tests
+│  │  │  │  ├─ AddDisciplineSubject.test.tsx
+│  │  │  │  ├─ ChronoStudyCard.test.tsx
+│  │  │  │  ├─ HistoryCard.test.tsx
+│  │  │  │  ├─ HistoryItem.test.tsx
+│  │  │  │  ├─ Statistics.test.tsx
+│  │  │  │  ├─ Theme.test.tsx
+│  │  │  │  └─ Timer.test.tsx
+│  │  │  └─ utils.tsx
+│  │  ├─ favicon.ico
+│  │  ├─ layout.tsx
+│  │  ├─ manifest.json
+│  │  └─ providers.tsx
+│  ├─ assets
+│  │  ├─ images
+│  │  │  └─ icon.png
+│  │  └─ styles
+│  │     └─ globals.css
+│  ├─ components
+│  │  ├─ TitlebarButtons.tsx
+│  │  ├─ navbar.tsx
+│  │  ├─ providers
+│  │  │  └─ theme-provider.tsx
+│  │  ├─ table
+│  │  │  ├─ functions.ts
+│  │  │  ├─ hook.ts
+│  │  │  ├─ index.tsx
+│  │  │  └─ types.ts
+│  │  └─ ui
+│  │     ├─ card.tsx
+│  │     └─ chart.tsx
+│  ├─ config
+│  │  ├─ fonts.ts
+│  │  └─ site.ts
+│  ├─ hero.ts
+│  ├─ lib
+│  │  ├─ discipline-data.ts
+│  │  └─ utils.ts
+│  ├─ store
+│  │  ├─ disciplineStore.ts
+│  │  ├─ focusStore.ts
+│  │  ├─ timerMinimized.ts
+│  │  └─ timerStore.ts
+│  └─ types
+│     └─ index.ts
+├─ tsconfig.json
+└─ yarn.lock
 ```
 
 ### Principais Componentes
@@ -139,4 +179,6 @@ Certifique-se de ter instalado:
 - build: Gera a build de produção.
 - start: Inicia o servidor em modo de produção.
 - lint: Verifica o código com ESLint.
+- storybook: Inicia o Storybook.
+- build-storybook: Gera a build do Storybook.
 - test: Realiza testes com Jest e React Testing Library.
