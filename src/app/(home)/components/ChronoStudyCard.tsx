@@ -92,7 +92,7 @@ export function ChronoStudyCard({
           }}
         />
       </CardHeader> */}
-      <CardBody className={cn('justify-between p-6', classNameBody)}>
+      <CardBody className={cn('justify-between p-9', classNameBody)}>
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex items-end justify-center gap-2">
