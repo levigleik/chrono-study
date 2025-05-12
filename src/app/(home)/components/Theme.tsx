@@ -7,6 +7,19 @@ import { useTheme } from 'next-themes'
 
 export default function Theme({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme()
+
+  const SWITCH = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  const TOGGLE_THEME = () => {
+    //@ts-ignore
+    if (!document.startViewTransition) SWITCH();
+
+    //@ts-ignore
+    document.startViewTransition(SWITCH);
+  };
+  
   return (
     <Tooltip
       content={
@@ -16,7 +29,7 @@ export default function Theme({ className }: { className?: string }) {
     >
       <Button
         variant="bordered"
-        onPress={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        onPress={TOGGLE_THEME}
         className={cn(className)}
         isIconOnly
         size="sm"
